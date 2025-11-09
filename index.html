@@ -244,6 +244,12 @@
             border-radius: 10px;
             border: 1px solid rgba(245, 245, 220, 0.3);
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-image:hover {
+            transform: scale(1.02);
         }
 
         .carousel-button {
@@ -359,6 +365,98 @@
 
         .ink-splash:first-child .section-title {
             margin-top: 0;
+        }
+
+        /* Стили для системных требований */
+        .system-requirements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .requirement-item {
+            background: rgba(30, 30, 30, 0.6);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(245, 245, 220, 0.2);
+            text-align: center;
+        }
+
+        .requirement-title {
+            color: rgb(245, 245, 220);
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .requirement-value {
+            color: rgb(245, 245, 220);
+            font-size: 20px;
+            line-height: 1.4;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* Стили для модального окна с увеличенным изображением */
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .image-modal.active {
+            display: flex;
+        }
+
+        .modal-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(245, 245, 220, 0.3);
+            cursor: default;
+            transition: transform 0.3s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: rgb(245, 245, 220);
+            font-size: 40px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 1001;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .zoom-info {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgb(245, 245, 220);
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-modal.active .zoom-info {
+            opacity: 1;
         }
 
         /* МЕДИА-ЗАПРОСЫ ДЛЯ ТЕЛЕФОНОВ */
@@ -484,6 +582,46 @@
                 font-size: 20px;
                 margin: 30px auto;
                 border-width: 2px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            /* Системные требования для телефона */
+            .system-requirements {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin: 30px 0;
+            }
+
+            .requirement-item {
+                padding: 20px;
+            }
+
+            .requirement-title {
+                font-size: 20px;
+            }
+
+            .requirement-value {
+                font-size: 16px;
+            }
+
+            /* Модальное окно для телефона */
+            .modal-image {
+                max-width: 95%;
+                max-height: 80%;
+            }
+
+            .modal-close {
+                top: 10px;
+                right: 10px;
+                font-size: 30px;
+            }
+
+            .zoom-info {
+                font-size: 14px;
+                padding: 8px 16px;
+                bottom: 10px;
             }
 
             /* Верхнее затемнение для телефона */
@@ -525,6 +663,14 @@
                 font-size: 18px;
                 padding: 18px 20px;
             }
+
+            .requirement-title {
+                font-size: 18px;
+            }
+
+            .requirement-value {
+                font-size: 14px;
+            }
         }
 
         /* Для планшетов */
@@ -543,6 +689,10 @@
 
             .title {
                 height: 500px;
+            }
+
+            .system-requirements {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -593,6 +743,38 @@
         <div class="section-divider"></div>
 
         <div class="ink-splash">
+            <p class="section-title">Системные требования</p>
+            <div class="system-requirements">
+                <div class="requirement-item">
+                    <div class="requirement-title">💻 Операционная система</div>
+                    <div class="requirement-value">Windows 10 / 11 (64-bit)</div>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-title">⚡ Процессор</div>
+                    <div class="requirement-value">Intel Core i5-11600K<br>или AMD Ryzen 5 5600X</div>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-title">🎮 Видеокарта</div>
+                    <div class="requirement-value">NVIDIA RTX 3060<br>или AMD Radeon RX 6600 XT</div>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-title">💾 Оперативная память</div>
+                    <div class="requirement-value">16 GB RAM</div>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-title">💿 Место на диске</div>
+                    <div class="requirement-value">15 GB свободного места</div>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-title">🎯 Производительность</div>
+                    <div class="requirement-value">~80 FPS на высоких настройках</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="ink-splash">
             <p class="section-title">Примечание</p>
             <p class="section-text">
                 На данный момент игра находится на раннем этапе разработки. Вы можете скачать уже имеющиеся билды, но там могут быть СПОЙЛЕРЫ! все на ваш страх и риск. *Скачать билды можно <span class="highlight">внизу страницы</span>*
@@ -629,6 +811,15 @@
         </div>
     </div>
 
+    <!-- Модальное окно для увеличенных изображений -->
+    <div class="image-modal" id="imageModal">
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <img class="modal-image" id="modalImage" src="" alt="Увеличенный скриншот">
+        <div class="zoom-info" id="zoomInfo">
+            Колесико мыши для масштабирования • Клик для закрытия
+        </div>
+    </div>
+
     <script>
         // Сначала скроллим наверх, потом показываем контент
         window.scrollTo(0, 0);
@@ -656,10 +847,14 @@
             '2025-11-09_03-52-45.png',
             '2025-11-09_04-01-27.png',
             '2025-11-09_04-02-10.png',
-			'2025-11-09_04-04-05.png'
+            '2025-11-09_04-04-05.png',
+			'2025-11-09_05-35-34.png'
         ];
 
         let currentSlide = 0;
+        let currentScale = 1;
+        let isDragging = false;
+        let startX, startY, translateX = 0, translateY = 0;
 
         function initCarousel() {
             const track = document.getElementById('carouselTrack');
@@ -668,7 +863,7 @@
             screenshots.forEach((screenshot, index) => {
                 const slide = document.createElement('div');
                 slide.className = 'carousel-slide';
-                slide.innerHTML = `<img src="${screenshot}" alt="Скриншот ${index + 1}" class="carousel-image">`;
+                slide.innerHTML = `<img src="${screenshot}" alt="Скриншот ${index + 1}" class="carousel-image" onclick="openModal('${screenshot}')">`;
                 track.appendChild(slide);
 
                 const dot = document.createElement('button');
@@ -706,6 +901,93 @@
             updateCarousel();
         }
 
+        // Функции для модального окна
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const zoomInfo = document.getElementById('zoomInfo');
+            
+            modalImage.src = imageSrc;
+            modalImage.style.transform = 'scale(1) translate(0, 0)';
+            modal.classList.add('active');
+            currentScale = 1;
+            translateX = 0;
+            translateY = 0;
+            
+            // Обновляем текст подсказки для мобильных
+            if (window.innerWidth <= 768) {
+                zoomInfo.textContent = 'Два пальца для масштабирования • Касание для закрытия';
+            } else {
+                zoomInfo.textContent = 'Колесико мыши для масштабирования • Клик для закрытия';
+            }
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Зум для модального окна
+        document.getElementById('modalImage').addEventListener('wheel', function(e) {
+            e.preventDefault();
+            const zoomIntensity = 0.1;
+            const delta = -e.deltaY * zoomIntensity;
+            
+            currentScale = Math.max(0.5, Math.min(3, currentScale + delta));
+            this.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+        });
+
+        // Закрытие модального окна по клику на фон
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Закрытие по Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Touch events для мобильного зума
+        let initialDistance = null;
+        
+        document.getElementById('modalImage').addEventListener('touchstart', function(e) {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                initialDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+            }
+        });
+
+        document.getElementById('modalImage').addEventListener('touchmove', function(e) {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                const currentDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                
+                if (initialDistance !== null) {
+                    const scaleChange = (currentDistance - initialDistance) * 0.01;
+                    currentScale = Math.max(0.5, Math.min(3, currentScale + scaleChange));
+                    this.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+                    initialDistance = currentDistance;
+                }
+            }
+        });
+
+        document.getElementById('modalImage').addEventListener('touchend', function() {
+            initialDistance = null;
+        });
+
         function scrollToFirstSection() {
             document.getElementById('description').scrollIntoView({ 
                 behavior: 'smooth',
@@ -739,4 +1021,3 @@
     </script>
 </body>
 </html>
-
