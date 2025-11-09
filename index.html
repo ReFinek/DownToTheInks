@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Down To The Inks</title>
     <style>
-        /* Все предыдущие стили остаются без изменений */
+        :root {
+            --text-color: rgb(245, 245, 220);
+            --bg-dark: rgba(0, 0, 0, 0.7);
+            --border-color: rgb(245, 245, 220);
+        }
+        
         body {
             margin: 0;
             padding: 0;
@@ -13,27 +18,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-image: url('2025-11-07_13-07-33-photoaidcom-darken%20(1).png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: url('2025-11-07_13-07-33-photoaidcom-darken%20(1).png') center/cover fixed;
             position: relative;
             overflow-x: hidden;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
 
-        body.loaded {
-            opacity: 1;
-        }
+        body.loaded { opacity: 1; }
 
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: inherit;
             filter: blur(2px) brightness(0.5);
             z-index: -1;
@@ -41,11 +38,10 @@
 
         .navbar {
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             width: 100%;
             height: 60px;
-            background-color: #000;
+            background: #000;
             z-index: 10;
             display: flex;
             justify-content: center;
@@ -55,19 +51,19 @@
         }
 
         .nav-button {
-            color: rgb(245, 245, 220);
+            color: var(--text-color);
             text-decoration: none;
             font-size: 18px;
             padding: 10px 20px;
             border: 1px solid rgba(245, 245, 220, 0.3);
             border-radius: 5px;
             transition: all 0.3s ease;
-            background-color: #000;
+            background: #000;
         }
 
         .nav-button:hover {
-            background-color: #333;
-            border-color: rgb(245, 245, 220);
+            background: #333;
+            border-color: var(--border-color);
         }
 
         .language-switcher {
@@ -75,7 +71,6 @@
             right: 20px;
             display: flex;
             gap: 10px;
-            align-items: center;
         }
 
         .language-button {
@@ -88,18 +83,13 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            color: rgb(245, 245, 220);
+            color: var(--text-color);
             font-size: 14px;
         }
 
-        .language-button:hover {
-            background-color: #333;
-            border-color: rgb(245, 245, 220);
-        }
-
-        .language-button.active {
-            background-color: rgba(245, 245, 220, 0.2);
-            border-color: rgb(245, 245, 220);
+        .language-button:hover, .language-button.active {
+            background: #333;
+            border-color: var(--border-color);
         }
 
         .flag {
@@ -113,12 +103,8 @@
             width: 90%;
             max-width: 1800px;
             height: 600px;
-            background-image: url('23967e8e-3300-40bc-b1d3-4a7ad067ed8f.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            margin-top: 80px;
-            margin-bottom: -50px;
+            background: url('23967e8e-3300-40bc-b1d3-4a7ad067ed8f.png') center/contain no-repeat;
+            margin: 80px 0 -50px;
             z-index: 4;
             position: relative;
         }
@@ -126,16 +112,14 @@
         .content-container {
             width: 80%;
             max-width: 1200px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 2px solid rgb(245, 245, 220);
-            margin-bottom: 0px;
+            background: var(--bg-dark);
+            border: 2px solid var(--border-color);
+            margin-bottom: 0;
             padding: 40px;
-            box-sizing: border-box;
             position: relative;
             z-index: 1;
-            overflow-y: visible;
             border-radius: 10px;
-            margin-top: 0px;
+            margin-top: 0;
         }
 
         .scroll-indicator {
@@ -145,8 +129,8 @@
             transform: translateX(-50%);
             width: 60px;
             height: 60px;
-            background-color: rgba(0, 0, 0, 0.8);
-            border: 2px solid rgb(245, 245, 220);
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--border-color);
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -159,55 +143,44 @@
 
         .scroll-indicator:hover {
             transform: translateX(-50%) scale(1.1);
-            background-color: rgba(30, 30, 30, 0.9);
+            background: rgba(30, 30, 30, 0.9);
         }
 
         .scroll-indicator::after {
             content: '↓';
-            color: rgb(245, 245, 220);
+            color: var(--text-color);
             font-size: 24px;
             font-weight: bold;
         }
 
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            40% {
-                transform: translateX(-50%) translateY(-10px);
-            }
-            60% {
-                transform: translateX(-50%) translateY(-5px);
-            }
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
         }
 
         .top-fade {
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             width: 100%;
             height: 300px;
-            background: linear-gradient(to bottom, 
-                        rgba(0,0,0,0.95) 0%, 
-                        rgba(0,0,0,0.7) 50%,
-                        transparent 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
             z-index: 3;
             pointer-events: none;
         }
 
         .section-title {
-            color: rgb(245, 245, 220);
+            color: var(--text-color);
             text-align: center;
             font-size: 44px;
-            margin-top: 80px;
-            margin-bottom: 40px;
+            margin: 80px 0 40px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            border-bottom: 2px solid rgb(245, 245, 220);
+            border-bottom: 2px solid var(--border-color);
             padding-bottom: 15px;
         }
 
         .section-text {
-            color: rgb(245, 245, 220);
+            color: var(--text-color);
             text-align: justify;
             font-size: 34px;
             line-height: 1.6;
@@ -217,16 +190,13 @@
 
         .highlight {
             font-weight: bold;
-            color: rgb(245, 245, 220);
+            color: var(--text-color);
             text-shadow: 0 0 5px rgba(245, 245, 220, 0.3);
         }
 
         .section-divider {
             height: 4px;
-            background: linear-gradient(90deg, 
-                        transparent 0%, 
-                        rgb(245, 245, 220) 50%, 
-                        transparent 100%);
+            background: linear-gradient(90deg, transparent 0%, var(--border-color) 50%, transparent 100%);
             margin: 60px auto;
             width: 60%;
         }
@@ -240,10 +210,7 @@
         .ink-splash::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -10px;
-            right: -10px;
-            bottom: 0;
+            top: 0; left: -10px; right: -10px; bottom: 0;
             background: rgba(30, 30, 30, 0.8);
             border-radius: 15px;
             z-index: -1;
@@ -262,8 +229,8 @@
             width: 100%;
             overflow: hidden;
             border-radius: 15px;
-            border: 2px solid rgb(245, 245, 220);
-            background-color: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.8);
         }
 
         .carousel-track {
@@ -287,17 +254,15 @@
             transition: transform 0.3s ease;
         }
 
-        .carousel-image:hover {
-            transform: scale(1.02);
-        }
+        .carousel-image:hover { transform: scale(1.02); }
 
         .carousel-button {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            border: 2px solid rgb(245, 245, 220);
-            color: rgb(245, 245, 220);
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -311,17 +276,12 @@
         }
 
         .carousel-button:hover {
-            background-color: rgba(245, 245, 220, 0.2);
+            background: rgba(245, 245, 220, 0.2);
             transform: translateY(-50%) scale(1.1);
         }
 
-        .carousel-prev {
-            left: 20px;
-        }
-
-        .carousel-next {
-            right: 20px;
-        }
+        .carousel-prev { left: 20px; }
+        .carousel-next { right: 20px; }
 
         .carousel-dots {
             display: flex;
@@ -334,19 +294,15 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background-color: rgba(245, 245, 220, 0.3);
+            background: rgba(245, 245, 220, 0.3);
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .carousel-dot.active {
-            background-color: rgb(245, 245, 220);
+        .carousel-dot.active, .carousel-dot:hover {
+            background: var(--text-color);
             transform: scale(1.2);
-        }
-
-        .carousel-dot:hover {
-            background-color: rgba(245, 245, 220, 0.7);
         }
 
         .download-button {
@@ -355,9 +311,9 @@
             max-width: 500px;
             margin: 50px auto;
             padding: 25px 40px;
-            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-            color: rgb(245, 245, 220);
-            border: 3px solid rgb(245, 245, 220);
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            color: var(--text-color);
+            border: 3px solid var(--border-color);
             border-radius: 15px;
             font-size: 28px;
             font-weight: bold;
@@ -374,33 +330,22 @@
         .download-button::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                        transparent, 
-                        rgba(245, 245, 220, 0.2), 
-                        transparent);
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(245, 245, 220, 0.2), transparent);
             transition: left 0.6s ease;
             z-index: -1;
         }
 
         .download-button:hover {
             transform: translateY(-5px);
-            background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+            background: linear-gradient(135deg, #3a3a3a, #2a2a2a);
             box-shadow: 0 8px 30px rgba(245, 245, 220, 0.3);
             border-color: #fff;
         }
 
-        .download-button:hover::before {
-            left: 100%;
-        }
-
-        .download-button:active {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(245, 245, 220, 0.4);
-        }
+        .download-button:hover::before { left: 100%; }
+        .download-button:active { transform: translateY(-2px); }
 
         .download-button.loading {
             pointer-events: none;
@@ -410,13 +355,11 @@
         .download-button.loading::after {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
+            top: 50%; left: 50%;
+            width: 20px; height: 20px;
             margin: -10px 0 0 -10px;
             border: 2px solid transparent;
-            border-top: 2px solid rgb(245, 245, 220);
+            border-top: 2px solid var(--text-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -426,11 +369,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        .ink-splash:first-child .section-title {
-            margin-top: 0;
-        }
-
-        /* Стили для системных требований */
         .system-requirements {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -447,7 +385,7 @@
         }
 
         .requirement-title {
-            color: rgb(245, 245, 220);
+            color: var(--text-color);
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 15px;
@@ -455,20 +393,17 @@
         }
 
         .requirement-value {
-            color: rgb(245, 245, 220);
+            color: var(--text-color);
             font-size: 20px;
             line-height: 1.4;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
-        /* Стили для модального окна с увеличенным изображением */
         .image-modal {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
             display: none;
             justify-content: center;
             align-items: center;
@@ -476,9 +411,7 @@
             cursor: pointer;
         }
 
-        .image-modal.active {
-            display: flex;
-        }
+        .image-modal.active { display: flex; }
 
         .modal-image {
             max-width: 90%;
@@ -492,9 +425,8 @@
 
         .modal-close {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            color: rgb(245, 245, 220);
+            top: 20px; right: 20px;
+            color: var(--text-color);
             font-size: 40px;
             cursor: pointer;
             background: none;
@@ -505,10 +437,9 @@
 
         .zoom-info {
             position: absolute;
-            bottom: 20px;
-            left: 50%;
+            bottom: 20px; left: 50%;
             transform: translateX(-50%);
-            color: rgb(245, 245, 220);
+            color: var(--text-color);
             font-size: 16px;
             background: rgba(0, 0, 0, 0.7);
             padding: 10px 20px;
@@ -518,277 +449,63 @@
             transition: opacity 0.3s ease;
         }
 
-        .image-modal.active .zoom-info {
-            opacity: 1;
-        }
+        .image-modal.active .zoom-info { opacity: 1; }
 
-        /* МЕДИА-ЗАПРОСЫ ДЛЯ ТЕЛЕФОНОВ */
+        /* Мобильная адаптация */
         @media (max-width: 768px) {
-            /* Навигация для телефона */
-            .navbar {
-                height: 50px;
-                gap: 10px;
-                padding: 0 10px;
-            }
-
-            .nav-button {
-                font-size: 12px;
-                padding: 6px 10px;
-                border-radius: 4px;
-            }
-
-            .language-switcher {
-                position: relative;
-                right: auto;
-                margin-left: auto;
-                gap: 5px;
-            }
-
-            .language-button {
-                padding: 4px 8px;
-                font-size: 12px;
-            }
-
-            .flag {
-                width: 16px;
-                height: 12px;
-            }
-
-            /* Тайтл для телефона */
-            .title {
-                width: 95%;
-                height: 300px;
-                margin-top: 70px;
-                margin-bottom: -30px;
-            }
-
-            /* Контентный контейнер для телефона */
-            .content-container {
-                width: 95%;
-                padding: 20px 15px;
-                border-width: 1px;
-            }
-
-            /* Текст для телефона */
-            .section-title {
-                font-size: 28px;
-                margin-top: 40px;
-                margin-bottom: 25px;
-                padding-bottom: 10px;
-            }
-
-            .section-text {
-                font-size: 18px;
-                line-height: 1.5;
-                margin-bottom: 25px;
-                text-align: left;
-            }
-
-            /* Индикатор скролла для телефона */
-            .scroll-indicator {
-                width: 50px;
-                height: 50px;
-                top: -60px;
-            }
-
-            .scroll-indicator::after {
-                font-size: 20px;
-            }
-
-            /* Разделители для телефона */
-            .section-divider {
-                margin: 40px auto;
-                width: 80%;
-            }
-
-            /* Блоки с текстом для телефона */
-            .ink-splash {
-                padding: 15px;
-                margin: 20px 0;
-            }
-
-            .ink-splash::before {
-                left: -5px;
-                right: -5px;
-                border-radius: 10px;
-            }
-
-            /* Карусель для телефона */
-            .screenshots-carousel {
-                margin: 40px 0;
-                padding: 15px 0;
-            }
-
-            .carousel-container {
-                border-radius: 10px;
-                border-width: 1px;
-            }
-
-            .carousel-slide {
-                padding: 10px;
-            }
-
-            .carousel-image {
-                border-radius: 8px;
-            }
-
-            .carousel-button {
-                width: 45px;
-                height: 45px;
-                font-size: 18px;
-            }
-
-            .carousel-prev {
-                left: 10px;
-            }
-
-            .carousel-next {
-                right: 10px;
-            }
-
-            .carousel-dots {
-                margin-top: 15px;
-            }
-
-            .carousel-dot {
-                width: 10px;
-                height: 10px;
-            }
-
-            /* Кнопка скачивания для телефона */
-            .download-button {
-                width: 90%;
-                padding: 20px 25px;
-                font-size: 20px;
-                margin: 30px auto;
-                border-width: 2px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            /* Системные требования для телефона */
-            .system-requirements {
-                grid-template-columns: 1fr;
-                gap: 20px;
-                margin: 30px 0;
-            }
-
-            .requirement-item {
-                padding: 20px;
-            }
-
-            .requirement-title {
-                font-size: 20px;
-            }
-
-            .requirement-value {
-                font-size: 16px;
-            }
-
-            /* Модальное окно для телефона */
-            .modal-image {
-                max-width: 95%;
-                max-height: 80%;
-            }
-
-            .modal-close {
-                top: 10px;
-                right: 10px;
-                font-size: 30px;
-            }
-
-            .zoom-info {
-                font-size: 14px;
-                padding: 8px 16px;
-                bottom: 10px;
-            }
-
-            /* Верхнее затемнение для телефона */
-            .top-fade {
-                height: 200px;
-            }
+            .navbar { height: 50px; gap: 10px; padding: 0 10px; }
+            .nav-button { font-size: 12px; padding: 6px 10px; }
+            .language-switcher { position: relative; right: auto; margin-left: auto; gap: 5px; }
+            .language-button { padding: 4px 8px; font-size: 12px; }
+            .flag { width: 16px; height: 12px; }
+            .title { width: 95%; height: 300px; margin: 70px 0 -30px; }
+            .content-container { width: 95%; padding: 20px 15px; border-width: 1px; }
+            .section-title { font-size: 28px; margin: 40px 0 25px; padding-bottom: 10px; }
+            .section-text { font-size: 18px; line-height: 1.5; margin-bottom: 25px; text-align: left; }
+            .scroll-indicator { width: 50px; height: 50px; top: -60px; }
+            .scroll-indicator::after { font-size: 20px; }
+            .section-divider { margin: 40px auto; width: 80%; }
+            .ink-splash { padding: 15px; margin: 20px 0; }
+            .ink-splash::before { left: -5px; right: -5px; border-radius: 10px; }
+            .screenshots-carousel { margin: 40px 0; padding: 15px 0; }
+            .carousel-container { border-radius: 10px; border-width: 1px; }
+            .carousel-slide { padding: 10px; }
+            .carousel-image { border-radius: 8px; }
+            .carousel-button { width: 45px; height: 45px; font-size: 18px; }
+            .carousel-prev { left: 10px; } .carousel-next { right: 10px; }
+            .carousel-dots { margin-top: 15px; }
+            .carousel-dot { width: 10px; height: 10px; }
+            .download-button { width: 90%; padding: 20px 25px; font-size: 20px; margin: 30px auto; border-width: 2px; }
+            .system-requirements { grid-template-columns: 1fr; gap: 20px; margin: 30px 0; }
+            .requirement-item { padding: 20px; }
+            .requirement-title { font-size: 20px; } .requirement-value { font-size: 16px; }
+            .modal-image { max-width: 95%; max-height: 80%; }
+            .modal-close { top: 10px; right: 10px; font-size: 30px; }
+            .zoom-info { font-size: 14px; padding: 8px 16px; bottom: 10px; }
+            .top-fade { height: 200px; }
         }
 
-        /* Для очень маленьких телефонов */
         @media (max-width: 480px) {
-            .navbar {
-                gap: 5px;
-            }
-
-            .nav-button {
-                font-size: 10px;
-                padding: 5px 8px;
-            }
-
-            .language-button {
-                font-size: 10px;
-                padding: 3px 6px;
-            }
-
-            .flag {
-                width: 14px;
-                height: 10px;
-            }
-
-            .title {
-                height: 250px;
-            }
-
-            .section-title {
-                font-size: 24px;
-            }
-
-            .section-text {
-                font-size: 16px;
-            }
-
-            .carousel-button {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
-
-            .download-button {
-                font-size: 18px;
-                padding: 18px 20px;
-            }
-
-            .requirement-title {
-                font-size: 18px;
-            }
-
-            .requirement-value {
-                font-size: 14px;
-            }
+            .navbar { gap: 5px; }
+            .nav-button { font-size: 10px; padding: 5px 8px; }
+            .language-button { font-size: 10px; padding: 3px 6px; }
+            .flag { width: 14px; height: 10px; }
+            .title { height: 250px; }
+            .section-title { font-size: 24px; } .section-text { font-size: 16px; }
+            .carousel-button { width: 40px; height: 40px; font-size: 16px; }
+            .download-button { font-size: 18px; padding: 18px 20px; }
+            .requirement-title { font-size: 18px; } .requirement-value { font-size: 14px; }
         }
 
-        /* Для планшетов */
         @media (min-width: 769px) and (max-width: 1024px) {
-            .content-container {
-                width: 90%;
-            }
-
-            .section-title {
-                font-size: 36px;
-            }
-
-            .section-text {
-                font-size: 28px;
-            }
-
-            .title {
-                height: 500px;
-            }
-
-            .system-requirements {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .content-container { width: 90%; }
+            .section-title { font-size: 36px; } .section-text { font-size: 28px; }
+            .title { height: 500px; }
+            .system-requirements { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
-    <!-- Навигационная панель -->
     <nav class="navbar">
         <a href="#about" class="nav-button">О нас</a>
         <a href="#description" class="nav-button">Описание</a>
@@ -802,7 +519,7 @@
                 RU
             </button>
             <button class="language-button" onclick="changeLanguage('en')">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5IDYiPjxyZWN0IHdpZHRoPSI5IiBoZWlnaHQ9IjYiIGZpbGw9IiMwMDIzN2YiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMCAwdjZMMy41IDMgMCAweiIvPjxwYXRoIGZpbGw9IiNjYTAwMjUiIGQ9Ik0wIDBoNHY2SDB6Ii8+PHBhdGggZmlsbD0iI2NhMDAyNSIgZD0iTTUgMGg0djZINXoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNOSAwdjZMNi41IDMgOSAweiIvPjwvc3ZnPg==" class="flag" alt="EN">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5IDYiPjxyZWN0IHdpZHRoPSI5IiBoZWlnaHQ9IjYiIGZpbGw9IiMwMDIzN2YiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMCAwdjZMMy41IDMgMCAweiIvPjxwYXRoIGZpbGw9IiNjYTAwMjUiIGQ9Ik0wIDBoNHY2SDB6Ii8+PHBhdGggZmlsbD0iI2NhMDAyNSIgZD0iTTUgMGg0djZINXoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNOSAwdjZMNi41IDMgOSAweiIvPjwvc3ZnPg==" class="flag" alt="US">
                 EN
             </button>
         </div>
@@ -812,33 +529,25 @@
     <div class="top-fade"></div>
     
     <div class="content-container">
-        <!-- Индикатор скролла -->
-        <div class="scroll-indicator" onclick="scrollToFirstSection()"></div>
+        <div class="scroll-indicator" onclick="scrollToSection('description')"></div>
 
-        <!-- Здесь будет ваш контент -->
         <div class="ink-splash" id="description">
             <p class="section-title" style="margin-top: 0;">Что из себя представляет Bendy: Down To The Inks?</p>
-            <p class="section-text">
-                Если коротко - Bendy: Down To The Inks - наша фанатская игра по оригинальной увлекательной и атмосферной вселенной "Bendy and the ink machine", созданной <span class="highlight">Joey Drew Studios</span>, в ней вас ждут уже полюбившиеся многим по оригинальной серии головоломки, загадки, антагонисты, и разумеется та самая атмосфера!
-            </p>
+            <p class="section-text">Если коротко - Bendy: Down To The Inks - наша фанатская игра по оригинальной увлекательной и атмосферной вселенной "Bendy and the ink machine", созданной <span class="highlight">Joey Drew Studios</span>, в ней вас ждут уже полюбившиеся многим по оригинальной серии головоломки, загадки, антагонисты, и разумеется та самая атмосфера!</p>
         </div>
 
         <div class="section-divider"></div>
 
         <div class="ink-splash">
             <p class="section-title">Лор игры</p>
-            <p class="section-text">
-                Главный герой - Эдвард, будучи исследователем заброшенных помещений натыкается на уже обветшалую квартиру <span class="highlight">Джоуи Дрю</span> из концовки первой части оригинальной вселенной. В попытках открыть ту самую дверь, ведущую в анимационную студию частично перезапускает основной цикл фигурировавший в 2 оригинальных частях, из за чего попадает в уже заброшенную локацию студии, где ему на пути к выходу предстоит пройти через множество разнообразных опасных и смертельных препятствий, среди которых, если не повезет, может оказаться и всеми известный <span class="highlight">Чернильный Демон</span>, однако хватит ли усилий героя чтобы выйти из цикла и покинуть зловещую студию?
-            </p>
+            <p class="section-text">Главный герой - Эдвард, будучи исследователем заброшенных помещений натыкается на уже обветшалую квартиру <span class="highlight">Джоуи Дрю</span> из концовки первой части оригинальной вселенной. В попытках открыть ту самую дверь, ведущую в анимационную студию частично перезапускает основной цикл фигурировавший в 2 оригинальных частях, из за чего попадает в уже заброшенную локацию студии, где ему на пути к выходу предстоит пройти через множество разнообразных опасных и смертельных препятствий, среди которых, если не повезет, может оказаться и всеми известный <span class="highlight">Чернильный Демон</span>, однако хватит ли усилий героя чтобы выйти из цикла и покинуть зловещую студию?</p>
         </div>
 
         <div class="section-divider"></div>
 
         <div class="ink-splash">
             <p class="section-title">Геймплей</p>
-            <p class="section-text">
-                Ищите различные предметы, Отбивайтесь от монстров разного уровня силы, Разбивайте препятствия в виде различных досок и прочей фурнитуры, Взаимодействуйте с различными механизмами для достижения своих целей, И разумеется, постарайтесь не умереть по пути...
-            </p>
+            <p class="section-text">Ищите различные предметы, Отбивайтесь от монстров разного уровня силы, Разбивайте препятствия в виде различных досок и прочей фурнитуры, Взаимодействуйте с различными механизмами для достижения своих целей, И разумеется, постарайтесь не умереть по пути...</p>
         </div>
 
         <div class="section-divider"></div>
@@ -846,30 +555,12 @@
         <div class="ink-splash">
             <p class="section-title">Системные требования</p>
             <div class="system-requirements">
-                <div class="requirement-item">
-                    <div class="requirement-title">💻 Операционная система</div>
-                    <div class="requirement-value">Windows 10 / 11 (64-bit)</div>
-                </div>
-                <div class="requirement-item">
-                    <div class="requirement-title">⚡ Процессор</div>
-                    <div class="requirement-value">Intel Core i5-11600K<br>или AMD Ryzen 5 5600X</div>
-                </div>
-                <div class="requirement-item">
-                    <div class="requirement-title">🎮 Видеокарта</div>
-                    <div class="requirement-value">NVIDIA RTX 3060<br>или AMD Radeon RX 6600 XT</div>
-                </div>
-                <div class="requirement-item">
-                    <div class="requirement-title">💾 Оперативная память</div>
-                    <div class="requirement-value">16 GB RAM</div>
-                </div>
-                <div class="requirement-item">
-                    <div class="requirement-title">💿 Место на диске</div>
-                    <div class="requirement-value">15 GB свободного места</div>
-                </div>
-                <div class="requirement-item">
-                    <div class="requirement-title">🎯 Производительность</div>
-                    <div class="requirement-value">~80 FPS на высоких настройках</div>
-                </div>
+                <div class="requirement-item"><div class="requirement-title">💻 Операционная система</div><div class="requirement-value">Windows 10 / 11 (64-bit)</div></div>
+                <div class="requirement-item"><div class="requirement-title">⚡ Процессор</div><div class="requirement-value">Intel Core i5-11600K<br>или AMD Ryzen 5 5600X</div></div>
+                <div class="requirement-item"><div class="requirement-title">🎮 Видеокарта</div><div class="requirement-value">NVIDIA RTX 3060<br>или AMD Radeon RX 6600 XT</div></div>
+                <div class="requirement-item"><div class="requirement-title">💾 Оперативная память</div><div class="requirement-value">16 GB RAM</div></div>
+                <div class="requirement-item"><div class="requirement-title">💿 Место на диске</div><div class="requirement-value">15 GB свободного места</div></div>
+                <div class="requirement-item"><div class="requirement-title">🎯 Производительность</div><div class="requirement-value">~80 FPS на высоких настройках</div></div>
             </div>
         </div>
 
@@ -877,443 +568,261 @@
 
         <div class="ink-splash">
             <p class="section-title">Примечание</p>
-            <p class="section-text">
-                На данный момент игра находится на раннем этапе разработки. Вы можете скачать уже имеющиеся билды, но там могут быть СПОЙЛЕРЫ! все на ваш страх и риск. *Скачать билды можно <span class="highlight">внизу страницы</span>*
-            </p>
+            <p class="section-text">На данный момент игра находится на раннем этапе разработки. Вы можете скачать уже имеющиеся билды, но там могут быть СПОЙЛЕРЫ! все на ваш страх и риск. *Скачать билды можно <span class="highlight">внизу страницы</span>*</p>
         </div>
 
         <div class="section-divider"></div>
 
-        <!-- Секция скриншотов -->
         <div class="ink-splash" id="screenshots">
             <p class="section-title">Скриншоты</p>
-            
             <div class="screenshots-carousel">
                 <div class="carousel-container">
-                    <div class="carousel-track" id="carouselTrack">
-                        <!-- Слайды будут добавлены через JavaScript -->
-                    </div>
-                    
+                    <div class="carousel-track" id="carouselTrack"></div>
                     <button class="carousel-button carousel-prev" onclick="prevSlide()">❮</button>
                     <button class="carousel-button carousel-next" onclick="nextSlide()">❯</button>
                 </div>
-                
-                <div class="carousel-dots" id="carouselDots">
-                    <!-- Точки будут добавлены через JavaScript -->
-                </div>
+                <div class="carousel-dots" id="carouselDots"></div>
             </div>
         </div>
 
-        <!-- Кнопка скачивания -->
         <div class="ink-splash" id="download">
-            <a href="#" class="download-button" onclick="downloadGame(event)">
-                СКАЧАТЬ БИЛД
-            </a>
+            <a href="#" class="download-button" onclick="downloadGame(event)">СКАЧАТЬ БИЛД</a>
         </div>
     </div>
 
-    <!-- Модальное окно для увеличенных изображений -->
     <div class="image-modal" id="imageModal">
         <button class="modal-close" onclick="closeModal()">×</button>
         <img class="modal-image" id="modalImage" src="" alt="Увеличенный скриншот">
-        <div class="zoom-info" id="zoomInfo">
-            Колесико мыши для масштабирования • Клик для закрытия
-        </div>
+        <div class="zoom-info" id="zoomInfo">Колесико мыши для масштабирования • Клик для закрытия</div>
     </div>
 
     <script>
-        // Сначала скроллим наверх, потом показываем контент
-        window.scrollTo(0, 0);
-        
-        // Ждем полной загрузки страницы
-        window.addEventListener('load', function() {
-            // Добавляем небольшую задержку для гарантии
-            setTimeout(function() {
+        // Конфигурация
+        const config = {
+            screenshots: [
+                '2025-11-07_13-07-33-photoaidcom-darken%20(1).png',
+                '2025-11-09_03-42-35.png',
+                '2025-11-09_03-43-50.png',
+                '2025-11-09_03-44-54.png',
+                '2025-11-09_03-52-45.png',
+                '2025-11-09_04-01-27.png',
+                '2025-11-09_04-02-10.png',
+                '2025-11-09_04-04-05.png'
+            ],
+            zipFile: 'game-build.zip',
+            texts: {
+                ru: {
+                    nav: ['О нас', 'Описание', 'Скриншоты', 'Скачать'],
+                    sections: [
+                        ['Что из себя представляет Bendy: Down To The Inks?', 'Если коротко - Bendy: Down To The Inks - наша фанатская игра по оригинальной увлекательной и атмосферной вселенной "Bendy and the ink machine", созданной <span class="highlight">Joey Drew Studios</span>, в ней вас ждут уже полюбившиеся многим по оригинальной серии головоломки, загадки, антагонисты, и разумеется та самая атмосфера!'],
+                        ['Лор игры', 'Главный герой - Эдвард, будучи исследователем заброшенных помещений натыкается на уже обветшалую квартиру <span class="highlight">Джоуи Дрю</span> из концовки первой части оригинальной вселенной. В попытках открыть ту самую дверь, ведущую в анимационную студию частично перезапускает основной цикл фигурировавший в 2 оригинальных частях, из за чего попадает в уже заброшенную локацию студии, где ему на пути к выходу предстоит пройти через множество разнообразных опасных и смертельных препятствий, среди которых, если не повезет, может оказаться и всеми известный <span class="highlight">Чернильный Демон</span>, однако хватит ли усилий героя чтобы выйти из цикла и покинуть зловещую студию?'],
+                        ['Геймплей', 'Ищите различные предметы, Отбивайтесь от монстров разного уровня силы, Разбивайте препятствия в виде различных досок и прочей фурнитуры, Взаимодействуйте с различными механизмами для достижения своих целей, И разумеется, постарайтесь не умереть по пути...'],
+                        ['Системные требования', ['💻 Операционная система', '⚡ Процессор', '🎮 Видеокарта', '💾 Оперативная память', '💿 Место на диске', '🎯 Производительность'], ['Windows 10 / 11 (64-bit)', 'Intel Core i5-11600K<br>или AMD Ryzen 5 5600X', 'NVIDIA RTX 3060<br>или AMD Radeon RX 6600 XT', '16 GB RAM', '15 GB свободного места', '~80 FPS на высоких настройках']],
+                        ['Примечание', 'На данный момент игра находится на раннем этапе разработки. Вы можете скачать уже имеющиеся билды, но там могут быть СПОЙЛЕРЫ! все на ваш страх и риск. *Скачать билды можно <span class="highlight">внизу страницы</span>*'],
+                        ['Скриншоты']
+                    ],
+                    download: 'СКАЧАТЬ БИЛД',
+                    modal: ['Два пальца для масштабирования • Касание для закрытия', 'Колесико мыши для масштабирования • Клик для закрытия'],
+                    success: 'Скачивание началось! Проверьте папку "Загрузки".'
+                },
+                en: {
+                    nav: ['About', 'Description', 'Screenshots', 'Download'],
+                    sections: [
+                        ['What is Bendy: Down To The Inks?', 'In short - Bendy: Down To The Inks is our fan game based on the original captivating and atmospheric universe of "Bendy and the ink machine" created by <span class="highlight">Joey Drew Studios</span>. It features puzzles, mysteries, antagonists, and of course that iconic atmosphere that many have come to love from the original series!'],
+                        ['Game Lore', 'The main character - Edward, being an explorer of abandoned places, comes across the already dilapidated apartment of <span class="highlight">Joey Drew</span> from the ending of the first part of the original universe. While trying to open that very door leading to the animation studio, he partially restarts the main cycle that appeared in the 2 original parts, which causes him to end up in the already abandoned studio location. On his way to the exit, he will have to go through many different dangerous and deadly obstacles, among which, if he is unlucky, may be the well-known <span class="highlight">Ink Demon</span>. But will the hero have enough strength to break out of the cycle and leave the sinister studio?'],
+                        ['Gameplay', 'Search for various items, Fight back against monsters of different strength levels, Break through obstacles in the form of various boards and other furnishings, Interact with various mechanisms to achieve your goals, And of course, try not to die along the way...'],
+                        ['System Requirements', ['💻 Operating System', '⚡ Processor', '🎮 Graphics Card', '💾 RAM', '💿 Storage', '🎯 Performance'], ['Windows 10 / 11 (64-bit)', 'Intel Core i5-11600K<br>or AMD Ryzen 5 5600X', 'NVIDIA RTX 3060<br>or AMD Radeon RX 6600 XT', '16 GB RAM', '15 GB available space', '~80 FPS on high settings']],
+                        ['Note', 'The game is currently in early development. You can download the available builds, but they may contain SPOILERS! Everything is at your own risk. *You can download builds <span class="highlight">at the bottom of the page</span>*'],
+                        ['Screenshots']
+                    ],
+                    download: 'DOWNLOAD BUILD',
+                    modal: ['Two fingers to zoom • Tap to close', 'Mouse wheel to zoom • Click to close'],
+                    success: 'Download started! Check your "Downloads" folder.'
+                }
+            }
+        };
+
+        // Глобальные переменные
+        let currentSlide = 0, currentScale = 1, translateX = 0, translateY = 0, initialDistance = null;
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            window.scrollTo(0, 0);
+            setTimeout(() => {
                 document.body.classList.add('loaded');
-                window.scrollTo(0, 0);
+                initCarousel();
+                initSmoothScroll();
             }, 100);
         });
 
-        // На всякий случай дублируем при каждом обновлении
-        window.onbeforeunload = function () {
-            window.scrollTo(0, 0);
-        }
+        window.onbeforeunload = () => window.scrollTo(0, 0);
 
-        // Данные скриншотов
-        const screenshots = [
-            '2025-11-07_13-07-33-photoaidcom-darken%20(1).png',
-            '2025-11-09_03-42-35.png',
-            '2025-11-09_03-43-50.png',
-            '2025-11-09_03-44-54.png',
-            '2025-11-09_03-52-45.png',
-            '2025-11-09_04-01-27.png',
-            '2025-11-09_04-02-10.png',
-            '2025-11-09_04-04-05.png',
-            '2025-11-09_05-35-34.png'
-        ];
-
-        let currentSlide = 0;
-        let currentScale = 1;
-        let isDragging = false;
-        let startX, startY, translateX = 0, translateY = 0;
-
-        // Функция для скачивания игры
-        function downloadGame(event) {
-            event.preventDefault();
-            
-            const downloadButton = event.target;
-            const originalText = downloadButton.textContent;
-            
-            // Добавляем индикатор загрузки
-            downloadButton.classList.add('loading');
-            downloadButton.textContent = 'ПОДГОТОВКА...';
-            
-            // Путь к вашему ZIP архиву на GitHub
-            const zipFilePath = 'game-build.zip'; // Замените на реальный путь к вашему архиву
-            
-            // Создаем временную ссылку для скачивания
-            setTimeout(() => {
-                const link = document.createElement('a');
-                link.href = zipFilePath;
-                link.download = 'Bendy_Down_To_The_Inks_Build.zip';
-                
-                // Симулируем клик по ссылке
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                // Возвращаем исходное состояние кнопки
-                downloadButton.classList.remove('loading');
-                downloadButton.textContent = originalText;
-                
-                // Показываем сообщение об успешном скачивании
-                showDownloadSuccess();
-            }, 2000); // Имитация задержки загрузки
-        }
-
-        // Функция для показа сообщения об успешном скачивании
-        // Функция для показа сообщения об успешном скачивании
-        function showDownloadSuccess() {
-            const isEnglish = document.querySelector('.language-button:nth-child(2)').classList.contains('active');
-            const messageText = isEnglish ? 
-                'Download started! Check your "Downloads" folder.' : 
-                'Скачивание началось! Проверьте папку "Загрузки".';
-        
-            // Создаем временное сообщение
-            const successMessage = document.createElement('div');
-            successMessage.textContent = messageText;
-            successMessage.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: rgba(0, 0, 0, 0.9);
-                color: rgb(245, 245, 220);
-                padding: 20px 30px;
-                border: 2px solid rgb(245, 245, 220);
-                border-radius: 10px;
-                font-size: 18px;
-                z-index: 10000;
-                text-align: center;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            `;
-            
-            document.body.appendChild(successMessage);
-            
-            // Удаляем сообщение через 3 секунды
-            setTimeout(() => {
-                document.body.removeChild(successMessage);
-            }, 3000);
-        }
-        // Функция для переключения языка
-        function changeLanguage(lang) {
-            const buttons = document.querySelectorAll('.language-button');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            
-            event.target.classList.add('active');
-            
-            if (lang === 'en') {
-                // Английская версия - навигация
-                document.querySelector('a[href="#about"]').textContent = 'About';
-                document.querySelector('a[href="#description"]').textContent = 'Description';
-                document.querySelector('a[href="#screenshots"]').textContent = 'Screenshots';
-                document.querySelector('a[href="#download"]').textContent = 'Download';
-                
-                // Секция описания
-                document.querySelector('#description .section-title').textContent = 'What is Bendy: Down To The Inks?';
-                document.querySelector('#description .section-text').innerHTML = 
-                    'In short - Bendy: Down To The Inks is our fan game based on the original captivating and atmospheric universe of "Bendy and the ink machine" created by <span class="highlight">Joey Drew Studios</span>. It features puzzles, mysteries, antagonists, and of course that iconic atmosphere that many have come to love from the original series!';
-                
-                // Секция лора
-                document.querySelectorAll('.ink-splash')[1].querySelector('.section-title').textContent = 'Game Lore';
-                document.querySelectorAll('.ink-splash')[1].querySelector('.section-text').innerHTML = 
-                    'The main character - Edward, being an explorer of abandoned places, comes across the already dilapidated apartment of <span class="highlight">Joey Drew</span> from the ending of the first part of the original universe. While trying to open that very door leading to the animation studio, he partially restarts the main cycle that appeared in the 2 original parts, which causes him to end up in the already abandoned studio location. On his way to the exit, he will have to go through many different dangerous and deadly obstacles, among which, if he is unlucky, may be the well-known <span class="highlight">Ink Demon</span>. But will the hero have enough strength to break out of the cycle and leave the sinister studio?';
-                
-                // Секция геймплея
-                document.querySelectorAll('.ink-splash')[2].querySelector('.section-title').textContent = 'Gameplay';
-                document.querySelectorAll('.ink-splash')[2].querySelector('.section-text').innerHTML = 
-                    'Search for various items, Fight back against monsters of different strength levels, Break through obstacles in the form of various boards and other furnishings, Interact with various mechanisms to achieve your goals, And of course, try not to die along the way...';
-                
-                // Секция системных требований
-                document.querySelectorAll('.ink-splash')[3].querySelector('.section-title').textContent = 'System Requirements';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[0].textContent = '💻 Operating System';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[1].textContent = '⚡ Processor';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[2].textContent = '🎮 Graphics Card';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[3].textContent = '💾 RAM';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[4].textContent = '💿 Storage';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[5].textContent = '🎯 Performance';
-                
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[0].innerHTML = 'Windows 10 / 11 (64-bit)';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[1].innerHTML = 'Intel Core i5-11600K<br>or AMD Ryzen 5 5600X';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[2].innerHTML = 'NVIDIA RTX 3060<br>or AMD Radeon RX 6600 XT';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[3].innerHTML = '16 GB RAM';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[4].innerHTML = '15 GB available space';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[5].innerHTML = '~80 FPS on high settings';
-                
-                // Секция примечания
-                document.querySelectorAll('.ink-splash')[4].querySelector('.section-title').textContent = 'Note';
-                document.querySelectorAll('.ink-splash')[4].querySelector('.section-text').innerHTML = 
-                    'The game is currently in early development. You can download the available builds, but they may contain SPOILERS! Everything is at your own risk. *You can download builds <span class="highlight">at the bottom of the page</span>*';
-                
-                // Секция скриншотов
-                document.querySelectorAll('.ink-splash')[5].querySelector('.section-title').textContent = 'Screenshots';
-                
-                // Кнопка скачивания
-                document.querySelector('.download-button').textContent = 'DOWNLOAD BUILD';
-                
-                // Индикатор скролла
-                document.querySelector('.scroll-indicator').setAttribute('onclick', 'scrollToFirstSection()');
-                
-                // Текст в модальном окне
-                if (window.innerWidth <= 768) {
-                    document.getElementById('zoomInfo').textContent = 'Two fingers to zoom • Tap to close';
-                } else {
-                    document.getElementById('zoomInfo').textContent = 'Mouse wheel to zoom • Click to close';
-                }
-                
-            } else {
-                // Русская версия - навигация
-                document.querySelector('a[href="#about"]').textContent = 'О нас';
-                document.querySelector('a[href="#description"]').textContent = 'Описание';
-                document.querySelector('a[href="#screenshots"]').textContent = 'Скриншоты';
-                document.querySelector('a[href="#download"]').textContent = 'Скачать';
-                
-                // Секция описания
-                document.querySelector('#description .section-title').textContent = 'Что из себя представляет Bendy: Down To The Inks?';
-                document.querySelector('#description .section-text').innerHTML = 
-                    'Если коротко - Bendy: Down To The Inks - наша фанатская игра по оригинальной увлекательной и атмосферной вселенной "Bendy and the ink machine", созданной <span class="highlight">Joey Drew Studios</span>, в ней вас ждут уже полюбившиеся многим по оригинальной серии головоломки, загадки, антагонисты, и разумеется та самая атмосфера!';
-                
-                // Секция лора
-                document.querySelectorAll('.ink-splash')[1].querySelector('.section-title').textContent = 'Лор игры';
-                document.querySelectorAll('.ink-splash')[1].querySelector('.section-text').innerHTML = 
-                    'Главный герой - Эдвард, будучи исследователем заброшенных помещений натыкается на уже обветшалую квартиру <span class="highlight">Джоуи Дрю</span> из концовки первой части оригинальной вселенной. В попытках открыть ту самую дверь, ведущую в анимационную студию частично перезапускает основной цикл фигурировавший в 2 оригинальных частях, из за чего попадает в уже заброшенную локацию студии, где ему на пути к выходу предстоит пройти через множество разнообразных опасных и смертельных препятствий, среди которых, если не повезет, может оказаться и всеми известный <span class="highlight">Чернильный Демон</span>, однако хватит ли усилий героя чтобы выйти из цикла и покинуть зловещую студию?';
-                
-                // Секция геймплея
-                document.querySelectorAll('.ink-splash')[2].querySelector('.section-title').textContent = 'Геймплей';
-                document.querySelectorAll('.ink-splash')[2].querySelector('.section-text').innerHTML = 
-                    'Ищите различные предметы, Отбивайтесь от монстров разного уровня силы, Разбивайте препятствия в виде различных досок и прочей фурнитуры, Взаимодействуйте с различными механизмами для достижения своих целей, И разумеется, постарайтесь не умереть по пути...';
-                
-                // Секция системных требований
-                document.querySelectorAll('.ink-splash')[3].querySelector('.section-title').textContent = 'Системные требования';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[0].textContent = '💻 Операционная система';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[1].textContent = '⚡ Процессор';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[2].textContent = '🎮 Видеокарта';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[3].textContent = '💾 Оперативная память';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[4].textContent = '💿 Место на диске';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[5].textContent = '🎯 Производительность';
-                
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[0].innerHTML = 'Windows 10 / 11 (64-bit)';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[1].innerHTML = 'Intel Core i5-11600K<br>или AMD Ryzen 5 5600X';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[2].innerHTML = 'NVIDIA RTX 3060<br>или AMD Radeon RX 6600 XT';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[3].innerHTML = '16 GB RAM';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[4].innerHTML = '15 GB свободного места';
-                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[5].innerHTML = '~80 FPS на высоких настройках';
-                
-                // Секция примечания
-                document.querySelectorAll('.ink-splash')[4].querySelector('.section-title').textContent = 'Примечание';
-                document.querySelectorAll('.ink-splash')[4].querySelector('.section-text').innerHTML = 
-                    'На данный момент игра находится на раннем этапе разработки. Вы можете скачать уже имеющиеся билды, но там могут быть СПОЙЛЕРЫ! все на ваш страх и риск. *Скачать билды можно <span class="highlight">внизу страницы</span>*';
-                
-                // Секция скриншотов
-                document.querySelectorAll('.ink-splash')[5].querySelector('.section-title').textContent = 'Скриншоты';
-                
-                // Кнопка скачивания
-                document.querySelector('.download-button').textContent = 'СКАЧАТЬ БИЛД';
-                
-                // Индикатор скролла
-                document.querySelector('.scroll-indicator').setAttribute('onclick', 'scrollToFirstSection()');
-                
-                // Текст в модальном окне
-                if (window.innerWidth <= 768) {
-                    document.getElementById('zoomInfo').textContent = 'Два пальца для масштабирования • Касание для закрытия';
-                } else {
-                    document.getElementById('zoomInfo').textContent = 'Колесико мыши для масштабирования • Клик для закрытия';
-                }
-            }
-        }
+        // Карусель
         function initCarousel() {
             const track = document.getElementById('carouselTrack');
             const dots = document.getElementById('carouselDots');
-
-            screenshots.forEach((screenshot, index) => {
-                const slide = document.createElement('div');
-                slide.className = 'carousel-slide';
-                slide.innerHTML = `<img src="${screenshot}" alt="Скриншот ${index + 1}" class="carousel-image" onclick="openModal('${screenshot}')">`;
-                track.appendChild(slide);
-
-                const dot = document.createElement('button');
-                dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
-                dot.onclick = () => goToSlide(index);
-                dots.appendChild(dot);
+            
+            config.screenshots.forEach((screenshot, i) => {
+                track.innerHTML += `<div class="carousel-slide"><img src="${screenshot}" alt="Скриншот ${i+1}" class="carousel-image" onclick="openModal('${screenshot}')"></div>`;
+                dots.innerHTML += `<button class="carousel-dot ${i===0?'active':''}" onclick="goToSlide(${i})"></button>`;
             });
-
-            updateCarousel();
         }
 
         function updateCarousel() {
-            const track = document.getElementById('carouselTrack');
-            const dots = document.querySelectorAll('.carousel-dot');
-            
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
-            
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
-            });
+            document.getElementById('carouselTrack').style.transform = `translateX(-${currentSlide * 100}%)`;
+            document.querySelectorAll('.carousel-dot').forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
         }
 
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % screenshots.length;
-            updateCarousel();
-        }
+        function nextSlide() { currentSlide = (currentSlide + 1) % config.screenshots.length; updateCarousel(); }
+        function prevSlide() { currentSlide = (currentSlide - 1 + config.screenshots.length) % config.screenshots.length; updateCarousel(); }
+        function goToSlide(index) { currentSlide = index; updateCarousel(); }
 
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + screenshots.length) % screenshots.length;
-            updateCarousel();
-        }
-
-        function goToSlide(index) {
-            currentSlide = index;
-            updateCarousel();
-        }
-
-        // Функции для модального окна
-        function openModal(imageSrc) {
+        // Модальное окно
+        function openModal(src) {
             const modal = document.getElementById('imageModal');
-            const modalImage = document.getElementById('modalImage');
-            const zoomInfo = document.getElementById('zoomInfo');
+            const img = document.getElementById('modalImage');
+            const zoom = document.getElementById('zoomInfo');
             
-            modalImage.src = imageSrc;
-            modalImage.style.transform = 'scale(1) translate(0, 0)';
+            img.src = src;
+            img.style.transform = 'scale(1) translate(0, 0)';
             modal.classList.add('active');
-            currentScale = 1;
-            translateX = 0;
-            translateY = 0;
+            currentScale = 1; translateX = 0; translateY = 0;
             
-            // Обновляем текст подсказки для мобильных
-            if (window.innerWidth <= 768) {
-                zoomInfo.textContent = 'Два пальца для масштабирования • Касание для закрытия';
-            } else {
-                zoomInfo.textContent = 'Колесико мыши для масштабирования • Клик для закрытия';
-            }
+            const isMobile = window.innerWidth <= 768;
+            const lang = document.querySelector('.language-button.active').textContent.trim() === 'EN' ? 'en' : 'ru';
+            zoom.textContent = config.texts[lang].modal[isMobile ? 0 : 1];
             
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
-            const modal = document.getElementById('imageModal');
-            modal.classList.remove('active');
+            document.getElementById('imageModal').classList.remove('active');
             document.body.style.overflow = 'auto';
         }
 
-        // Зум для модального окна
-        document.getElementById('modalImage').addEventListener('wheel', function(e) {
+        // Зум изображения
+        document.getElementById('modalImage').addEventListener('wheel', e => {
             e.preventDefault();
-            const zoomIntensity = 0.1;
-            const delta = -e.deltaY * zoomIntensity;
-            
+            const delta = -e.deltaY * 0.1;
             currentScale = Math.max(0.5, Math.min(3, currentScale + delta));
-            this.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+            e.target.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
         });
 
-        // Закрытие модального окна по клику на фон
-        document.getElementById('imageModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
+        document.getElementById('imageModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-        // Закрытие по Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
-
-        // Touch events для мобильного зума
-        let initialDistance = null;
-        
-        document.getElementById('modalImage').addEventListener('touchstart', function(e) {
+        // Touch events
+        const modalImg = document.getElementById('modalImage');
+        modalImg.addEventListener('touchstart', e => {
             if (e.touches.length === 2) {
                 e.preventDefault();
-                initialDistance = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY
-                );
+                initialDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
             }
         });
 
-        document.getElementById('modalImage').addEventListener('touchmove', function(e) {
+        modalImg.addEventListener('touchmove', e => {
             if (e.touches.length === 2) {
                 e.preventDefault();
-                const currentDistance = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY
-                );
-                
+                const currentDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
                 if (initialDistance !== null) {
                     const scaleChange = (currentDistance - initialDistance) * 0.01;
                     currentScale = Math.max(0.5, Math.min(3, currentScale + scaleChange));
-                    this.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+                    modalImg.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
                     initialDistance = currentDistance;
                 }
             }
         });
 
-        document.getElementById('modalImage').addEventListener('touchend', function() {
-            initialDistance = null;
-        });
+        modalImg.addEventListener('touchend', () => { initialDistance = null; });
 
-        function scrollToFirstSection() {
-            document.getElementById('description').scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
+        // Навигация
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    const target = document.querySelector(link.getAttribute('href'));
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
             });
         }
 
-        document.querySelector('a[href="#description"]').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('description').scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-            });
-        });
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
-        document.querySelector('a[href="#screenshots"]').addEventListener('click', function(e) {
+        // Скачивание
+        function downloadGame(e) {
             e.preventDefault();
-            document.getElementById('screenshots').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
-        });
+            const btn = e.target;
+            const originalText = btn.textContent;
+            
+            btn.classList.add('loading');
+            btn.textContent = btn.textContent.includes('DOWNLOAD') ? 'PREPARING...' : 'ПОДГОТОВКА...';
+            
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.href = config.zipFile;
+                link.download = 'Bendy_Down_To_The_Inks_Build.zip';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                btn.classList.remove('loading');
+                btn.textContent = originalText;
+                showDownloadSuccess();
+            }, 2000);
+        }
 
-        document.querySelector('a[href="#download"]').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('download').scrollIntoView({ 
-                behavior: 'smooth' 
+        function showDownloadSuccess() {
+            const lang = document.querySelector('.language-button.active').textContent.trim() === 'EN' ? 'en' : 'ru';
+            const msg = document.createElement('div');
+            msg.textContent = config.texts[lang].success;
+            Object.assign(msg.style, {
+                position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+                background: 'rgba(0, 0, 0, 0.9)', color: 'var(--text-color)', padding: '20px 30px',
+                border: '2px solid var(--border-color)', borderRadius: '10px', fontSize: '18px',
+                zIndex: '10000', textAlign: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.5)'
             });
-        });
+            
+            document.body.appendChild(msg);
+            setTimeout(() => document.body.removeChild(msg), 3000);
+        }
 
-        document.addEventListener('DOMContentLoaded', initCarousel);
+        // Смена языка
+        function changeLanguage(lang) {
+            document.querySelectorAll('.language-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const texts = config.texts[lang];
+            const navButtons = document.querySelectorAll('.nav-button');
+            
+            texts.nav.forEach((text, i) => {
+                if (navButtons[i]) navButtons[i].textContent = text;
+            });
+            
+            document.querySelectorAll('.ink-splash').forEach((section, i) => {
+                const title = section.querySelector('.section-title');
+                const content = section.querySelector('.section-text');
+                const requirements = section.querySelectorAll('.requirement-item');
+                
+                if (title) title.textContent = texts.sections[i][0];
+                if (content) content.innerHTML = texts.sections[i][1];
+                
+                if (requirements.length > 0) {
+                    requirements.forEach((req, j) => {
+                        req.querySelector('.requirement-title').textContent = texts.sections[i][1][j];
+                        req.querySelector('.requirement-value').innerHTML = texts.sections[i][2][j];
+                    });
+                }
+            });
+            
+            document.querySelector('.download-button').textContent = texts.download;
+            
+            if (document.getElementById('imageModal').classList.contains('active')) {
+                const isMobile = window.innerWidth <= 768;
+                document.getElementById('zoomInfo').textContent = texts.modal[isMobile ? 0 : 1];
+            }
+        }
     </script>
 </body>
 </html>
-
