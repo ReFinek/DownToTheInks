@@ -991,10 +991,16 @@
         }
 
         // Функция для показа сообщения об успешном скачивании
+        // Функция для показа сообщения об успешном скачивании
         function showDownloadSuccess() {
+            const isEnglish = document.querySelector('.language-button:nth-child(2)').classList.contains('active');
+            const messageText = isEnglish ? 
+                'Download started! Check your "Downloads" folder.' : 
+                'Скачивание началось! Проверьте папку "Загрузки".';
+        
             // Создаем временное сообщение
             const successMessage = document.createElement('div');
-            successMessage.textContent = 'Скачивание началось! Проверьте папку "Загрузки".';
+            successMessage.textContent = messageText;
             successMessage.style.cssText = `
                 position: fixed;
                 top: 50%;
@@ -1018,7 +1024,6 @@
                 document.body.removeChild(successMessage);
             }, 3000);
         }
-
         // Функция для переключения языка
         function changeLanguage(lang) {
             const buttons = document.querySelectorAll('.language-button');
@@ -1026,38 +1031,125 @@
             
             event.target.classList.add('active');
             
-            // Здесь можно добавить логику смены языка
             if (lang === 'en') {
-                // Английская версия
+                // Английская версия - навигация
                 document.querySelector('a[href="#about"]').textContent = 'About';
                 document.querySelector('a[href="#description"]').textContent = 'Description';
                 document.querySelector('a[href="#screenshots"]').textContent = 'Screenshots';
                 document.querySelector('a[href="#download"]').textContent = 'Download';
                 
-                // Обновляем тексты на странице
+                // Секция описания
                 document.querySelector('#description .section-title').textContent = 'What is Bendy: Down To The Inks?';
                 document.querySelector('#description .section-text').innerHTML = 
                     'In short - Bendy: Down To The Inks is our fan game based on the original captivating and atmospheric universe of "Bendy and the ink machine" created by <span class="highlight">Joey Drew Studios</span>. It features puzzles, mysteries, antagonists, and of course that iconic atmosphere that many have come to love from the original series!';
                 
-                // Можно добавить перевод остальных секций по аналогии
+                // Секция лора
+                document.querySelectorAll('.ink-splash')[1].querySelector('.section-title').textContent = 'Game Lore';
+                document.querySelectorAll('.ink-splash')[1].querySelector('.section-text').innerHTML = 
+                    'The main character - Edward, being an explorer of abandoned places, comes across the already dilapidated apartment of <span class="highlight">Joey Drew</span> from the ending of the first part of the original universe. While trying to open that very door leading to the animation studio, he partially restarts the main cycle that appeared in the 2 original parts, which causes him to end up in the already abandoned studio location. On his way to the exit, he will have to go through many different dangerous and deadly obstacles, among which, if he is unlucky, may be the well-known <span class="highlight">Ink Demon</span>. But will the hero have enough strength to break out of the cycle and leave the sinister studio?';
                 
+                // Секция геймплея
+                document.querySelectorAll('.ink-splash')[2].querySelector('.section-title').textContent = 'Gameplay';
+                document.querySelectorAll('.ink-splash')[2].querySelector('.section-text').innerHTML = 
+                    'Search for various items, Fight back against monsters of different strength levels, Break through obstacles in the form of various boards and other furnishings, Interact with various mechanisms to achieve your goals, And of course, try not to die along the way...';
+                
+                // Секция системных требований
+                document.querySelectorAll('.ink-splash')[3].querySelector('.section-title').textContent = 'System Requirements';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[0].textContent = '💻 Operating System';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[1].textContent = '⚡ Processor';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[2].textContent = '🎮 Graphics Card';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[3].textContent = '💾 RAM';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[4].textContent = '💿 Storage';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[5].textContent = '🎯 Performance';
+                
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[0].innerHTML = 'Windows 10 / 11 (64-bit)';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[1].innerHTML = 'Intel Core i5-11600K<br>or AMD Ryzen 5 5600X';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[2].innerHTML = 'NVIDIA RTX 3060<br>or AMD Radeon RX 6600 XT';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[3].innerHTML = '16 GB RAM';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[4].innerHTML = '15 GB available space';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[5].innerHTML = '~80 FPS on high settings';
+                
+                // Секция примечания
+                document.querySelectorAll('.ink-splash')[4].querySelector('.section-title').textContent = 'Note';
+                document.querySelectorAll('.ink-splash')[4].querySelector('.section-text').innerHTML = 
+                    'The game is currently in early development. You can download the available builds, but they may contain SPOILERS! Everything is at your own risk. *You can download builds <span class="highlight">at the bottom of the page</span>*';
+                
+                // Секция скриншотов
+                document.querySelectorAll('.ink-splash')[5].querySelector('.section-title').textContent = 'Screenshots';
+                
+                // Кнопка скачивания
                 document.querySelector('.download-button').textContent = 'DOWNLOAD BUILD';
                 
+                // Индикатор скролла
+                document.querySelector('.scroll-indicator').setAttribute('onclick', 'scrollToFirstSection()');
+                
+                // Текст в модальном окне
+                if (window.innerWidth <= 768) {
+                    document.getElementById('zoomInfo').textContent = 'Two fingers to zoom • Tap to close';
+                } else {
+                    document.getElementById('zoomInfo').textContent = 'Mouse wheel to zoom • Click to close';
+                }
+                
             } else {
-                // Русская версия (восстанавливаем оригинальные тексты)
+                // Русская версия - навигация
                 document.querySelector('a[href="#about"]').textContent = 'О нас';
                 document.querySelector('a[href="#description"]').textContent = 'Описание';
                 document.querySelector('a[href="#screenshots"]').textContent = 'Скриншоты';
                 document.querySelector('a[href="#download"]').textContent = 'Скачать';
                 
+                // Секция описания
                 document.querySelector('#description .section-title').textContent = 'Что из себя представляет Bendy: Down To The Inks?';
                 document.querySelector('#description .section-text').innerHTML = 
                     'Если коротко - Bendy: Down To The Inks - наша фанатская игра по оригинальной увлекательной и атмосферной вселенной "Bendy and the ink machine", созданной <span class="highlight">Joey Drew Studios</span>, в ней вас ждут уже полюбившиеся многим по оригинальной серии головоломки, загадки, антагонисты, и разумеется та самая атмосфера!';
                 
+                // Секция лора
+                document.querySelectorAll('.ink-splash')[1].querySelector('.section-title').textContent = 'Лор игры';
+                document.querySelectorAll('.ink-splash')[1].querySelector('.section-text').innerHTML = 
+                    'Главный герой - Эдвард, будучи исследователем заброшенных помещений натыкается на уже обветшалую квартиру <span class="highlight">Джоуи Дрю</span> из концовки первой части оригинальной вселенной. В попытках открыть ту самую дверь, ведущую в анимационную студию частично перезапускает основной цикл фигурировавший в 2 оригинальных частях, из за чего попадает в уже заброшенную локацию студии, где ему на пути к выходу предстоит пройти через множество разнообразных опасных и смертельных препятствий, среди которых, если не повезет, может оказаться и всеми известный <span class="highlight">Чернильный Демон</span>, однако хватит ли усилий героя чтобы выйти из цикла и покинуть зловещую студию?';
+                
+                // Секция геймплея
+                document.querySelectorAll('.ink-splash')[2].querySelector('.section-title').textContent = 'Геймплей';
+                document.querySelectorAll('.ink-splash')[2].querySelector('.section-text').innerHTML = 
+                    'Ищите различные предметы, Отбивайтесь от монстров разного уровня силы, Разбивайте препятствия в виде различных досок и прочей фурнитуры, Взаимодействуйте с различными механизмами для достижения своих целей, И разумеется, постарайтесь не умереть по пути...';
+                
+                // Секция системных требований
+                document.querySelectorAll('.ink-splash')[3].querySelector('.section-title').textContent = 'Системные требования';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[0].textContent = '💻 Операционная система';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[1].textContent = '⚡ Процессор';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[2].textContent = '🎮 Видеокарта';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[3].textContent = '💾 Оперативная память';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[4].textContent = '💿 Место на диске';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-title')[5].textContent = '🎯 Производительность';
+                
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[0].innerHTML = 'Windows 10 / 11 (64-bit)';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[1].innerHTML = 'Intel Core i5-11600K<br>или AMD Ryzen 5 5600X';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[2].innerHTML = 'NVIDIA RTX 3060<br>или AMD Radeon RX 6600 XT';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[3].innerHTML = '16 GB RAM';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[4].innerHTML = '15 GB свободного места';
+                document.querySelectorAll('.ink-splash')[3].querySelectorAll('.requirement-value')[5].innerHTML = '~80 FPS на высоких настройках';
+                
+                // Секция примечания
+                document.querySelectorAll('.ink-splash')[4].querySelector('.section-title').textContent = 'Примечание';
+                document.querySelectorAll('.ink-splash')[4].querySelector('.section-text').innerHTML = 
+                    'На данный момент игра находится на раннем этапе разработки. Вы можете скачать уже имеющиеся билды, но там могут быть СПОЙЛЕРЫ! все на ваш страх и риск. *Скачать билды можно <span class="highlight">внизу страницы</span>*';
+                
+                // Секция скриншотов
+                document.querySelectorAll('.ink-splash')[5].querySelector('.section-title').textContent = 'Скриншоты';
+                
+                // Кнопка скачивания
                 document.querySelector('.download-button').textContent = 'СКАЧАТЬ БИЛД';
+                
+                // Индикатор скролла
+                document.querySelector('.scroll-indicator').setAttribute('onclick', 'scrollToFirstSection()');
+                
+                // Текст в модальном окне
+                if (window.innerWidth <= 768) {
+                    document.getElementById('zoomInfo').textContent = 'Два пальца для масштабирования • Касание для закрытия';
+                } else {
+                    document.getElementById('zoomInfo').textContent = 'Колесико мыши для масштабирования • Клик для закрытия';
+                }
             }
         }
-
         function initCarousel() {
             const track = document.getElementById('carouselTrack');
             const dots = document.getElementById('carouselDots');
