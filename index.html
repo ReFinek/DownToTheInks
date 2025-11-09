@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="icon" type="image/png" href="icon.png">
-</head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Down To The Inks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --text-color: rgb(245, 245, 220);
             --bg-dark: rgba(0, 0, 0, 0.7);
             --border-color: rgb(245, 245, 220);
+            --ink-color: #1a1a1a;
+            --blood-red: #8B0000;
+            --gold: #D4AF37;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
@@ -25,6 +33,7 @@
             overflow-x: hidden;
             opacity: 0;
             transition: opacity 0.3s ease;
+            font-family: 'Special Elite', cursive;
         }
 
         body.loaded { opacity: 1; }
@@ -36,6 +45,31 @@
             background: inherit;
             filter: blur(2px) brightness(0.5);
             z-index: -1;
+        }
+
+        /* Ink drip animations */
+        .ink-drip {
+            position: fixed;
+            top: -100px;
+            width: 150px;
+            height: 200px;
+            background: linear-gradient(to bottom, transparent 10%, var(--ink-color) 90%);
+            clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
+            animation: drip 15s linear infinite;
+            z-index: 2;
+            opacity: 0.3;
+        }
+
+        .ink-drip:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .ink-drip:nth-child(2) { left: 30%; animation-delay: 5s; }
+        .ink-drip:nth-child(3) { left: 60%; animation-delay: 10s; }
+        .ink-drip:nth-child(4) { left: 85%; animation-delay: 7s; }
+
+        @keyframes drip {
+            0% { transform: translateY(-100px); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(100vh); opacity: 0; }
         }
 
         .navbar {
@@ -50,6 +84,8 @@
             align-items: center;
             gap: 40px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            border-bottom: 2px solid var(--gold);
+            font-family: 'Cinzel Decorative', cursive;
         }
 
         .nav-button {
@@ -61,11 +97,30 @@
             border-radius: 5px;
             transition: all 0.3s ease;
             background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
         }
 
         .nav-button:hover {
             background: #333;
-            border-color: var(--border-color);
+            border-color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
         }
 
         .language-switcher {
@@ -87,11 +142,12 @@
             gap: 5px;
             color: var(--text-color);
             font-size: 14px;
+            font-family: 'Special Elite', cursive;
         }
 
         .language-button:hover, .language-button.active {
             background: #333;
-            border-color: var(--border-color);
+            border-color: var(--gold);
         }
 
         .flag {
@@ -109,6 +165,7 @@
             margin: 80px 0 -50px;
             z-index: 4;
             position: relative;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
         }
 
         .content-container {
@@ -122,6 +179,21 @@
             z-index: 1;
             border-radius: 10px;
             margin-top: 0;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            border-image: linear-gradient(45deg, var(--gold), var(--blood-red), var(--gold)) 1;
+        }
+
+        .content-container::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            pointer-events: none;
+            z-index: -1;
         }
 
         .scroll-indicator {
@@ -146,6 +218,7 @@
         .scroll-indicator:hover {
             transform: translateX(-50%) scale(1.1);
             background: rgba(30, 30, 30, 0.9);
+            border-color: var(--gold);
         }
 
         .scroll-indicator::after {
@@ -179,6 +252,19 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 15px;
+            font-family: 'Creepster', cursive;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
         }
 
         .section-text {
@@ -188,12 +274,14 @@
             line-height: 1.6;
             margin-bottom: 40px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-family: 'Special Elite', cursive;
         }
 
         .highlight {
             font-weight: bold;
-            color: var(--text-color);
-            text-shadow: 0 0 5px rgba(245, 245, 220, 0.3);
+            color: var(--gold);
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+            position: relative;
         }
 
         .section-divider {
@@ -201,6 +289,19 @@
             background: linear-gradient(90deg, transparent 0%, var(--border-color) 50%, transparent 100%);
             margin: 60px auto;
             width: 60%;
+            position: relative;
+        }
+
+        .section-divider::before {
+            content: '✶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--gold);
+            background: var(--bg-dark);
+            padding: 0 15px;
+            font-size: 20px;
         }
 
         .ink-splash {
@@ -219,6 +320,19 @@
             border: 1px solid rgba(245, 245, 220, 0.2);
         }
 
+        .ink-splash::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 12px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
         .screenshots-carousel {
             position: relative;
             width: 100%;
@@ -233,6 +347,7 @@
             border-radius: 15px;
             border: 2px solid var(--border-color);
             background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
         }
 
         .carousel-track {
@@ -254,9 +369,14 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             cursor: pointer;
             transition: transform 0.3s ease;
+            filter: sepia(0.3) brightness(0.9);
         }
 
-        .carousel-image:hover { transform: scale(1.02); }
+        .carousel-image:hover { 
+            transform: scale(1.02);
+            filter: sepia(0) brightness(1);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        }
 
         .carousel-button {
             position: absolute;
@@ -278,8 +398,9 @@
         }
 
         .carousel-button:hover {
-            background: rgba(245, 245, 220, 0.2);
+            background: rgba(212, 175, 55, 0.2);
             transform: translateY(-50%) scale(1.1);
+            border-color: var(--gold);
         }
 
         .carousel-prev { left: 20px; }
@@ -303,7 +424,7 @@
         }
 
         .carousel-dot.active, .carousel-dot:hover {
-            background: var(--text-color);
+            background: var(--gold);
             transform: scale(1.2);
         }
 
@@ -327,6 +448,8 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            font-family: 'Creepster', cursive;
+            letter-spacing: 1px;
         }
 
         .download-button::before {
@@ -334,7 +457,7 @@
             position: absolute;
             top: 0; left: -100%;
             width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(245, 245, 220, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
             transition: left 0.6s ease;
             z-index: -1;
         }
@@ -342,8 +465,9 @@
         .download-button:hover {
             transform: translateY(-5px);
             background: linear-gradient(135deg, #3a3a3a, #2a2a2a);
-            box-shadow: 0 8px 30px rgba(245, 245, 220, 0.3);
-            border-color: #fff;
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+            border-color: var(--gold);
+            color: var(--gold);
         }
 
         .download-button:hover::before { left: 100%; }
@@ -384,6 +508,30 @@
             border-radius: 10px;
             border: 1px solid rgba(245, 245, 220, 0.2);
             text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .requirement-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .requirement-item:hover::before {
+            left: 100%;
+        }
+
+        .requirement-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .requirement-title {
@@ -392,6 +540,7 @@
             font-weight: bold;
             margin-bottom: 15px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-family: 'Cinzel Decorative', cursive;
         }
 
         .requirement-value {
@@ -420,7 +569,7 @@
             max-height: 90%;
             object-fit: contain;
             border-radius: 10px;
-            box-shadow: 0 0 40px rgba(245, 245, 220, 0.3);
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
             cursor: default;
             transition: transform 0.3s ease;
         }
@@ -435,6 +584,12 @@
             border: none;
             z-index: 1001;
             text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--gold);
+            transform: scale(1.1);
         }
 
         .zoom-info {
@@ -449,9 +604,72 @@
             text-align: center;
             opacity: 0;
             transition: opacity 0.3s ease;
+            border: 1px solid var(--gold);
         }
 
         .image-modal.active .zoom-info { opacity: 1; }
+
+        /* Bendy-themed decorations */
+        .bendy-corner {
+            position: fixed;
+            width: 150px;
+            height: 150px;
+            z-index: 1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .corner-tl {
+            top: 10px;
+            left: 10px;
+            border-top: 3px solid var(--gold);
+            border-left: 3px solid var(--gold);
+        }
+
+        .corner-tr {
+            top: 10px;
+            right: 10px;
+            border-top: 3px solid var(--gold);
+            border-right: 3px solid var(--gold);
+        }
+
+        .corner-bl {
+            bottom: 10px;
+            left: 10px;
+            border-bottom: 3px solid var(--gold);
+            border-left: 3px solid var(--gold);
+        }
+
+        .corner-br {
+            bottom: 10px;
+            right: 10px;
+            border-bottom: 3px solid var(--gold);
+            border-right: 3px solid var(--gold);
+        }
+
+        .page-turn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--gold);
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 5;
+            transition: all 0.3s ease;
+        }
+
+        .page-turn:hover {
+            transform: scale(1.1);
+            background: rgba(212, 175, 55, 0.2);
+        }
 
         /* Мобильная адаптация */
         @media (max-width: 768px) {
@@ -485,6 +703,8 @@
             .modal-close { top: 10px; right: 10px; font-size: 30px; }
             .zoom-info { font-size: 14px; padding: 8px 16px; bottom: 10px; }
             .top-fade { height: 200px; }
+            .bendy-corner { width: 80px; height: 80px; }
+            .ink-drip { width: 80px; height: 120px; }
         }
 
         @media (max-width: 480px) {
@@ -508,6 +728,21 @@
     </style>
 </head>
 <body>
+    <!-- Ink drip animations -->
+    <div class="ink-drip"></div>
+    <div class="ink-drip"></div>
+    <div class="ink-drip"></div>
+    <div class="ink-drip"></div>
+
+    <!-- Corner decorations -->
+    <div class="bendy-corner corner-tl"></div>
+    <div class="bendy-corner corner-tr"></div>
+    <div class="bendy-corner corner-bl"></div>
+    <div class="bendy-corner corner-br"></div>
+
+    <!-- Page turn effect -->
+    <div class="page-turn" onclick="scrollToTop()">↑</div>
+
     <nav class="navbar">
         <a href="#about" class="nav-button">О нас</a>
         <a href="#description" class="nav-button">Описание</a>
@@ -753,6 +988,10 @@
             document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         // Скачивание
         function downloadGame(e) {
             e.preventDefault();
@@ -784,7 +1023,8 @@
                 position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
                 background: 'rgba(0, 0, 0, 0.9)', color: 'var(--text-color)', padding: '20px 30px',
                 border: '2px solid var(--border-color)', borderRadius: '10px', fontSize: '18px',
-                zIndex: '10000', textAlign: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.5)'
+                zIndex: '10000', textAlign: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+                fontFamily: 'Special Elite, cursive'
             });
             
             document.body.appendChild(msg);
@@ -829,8 +1069,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
