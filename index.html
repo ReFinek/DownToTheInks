@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Down To The Inks</title>
     <style>
-        /* Скрываем контент до полной загрузки */
+        /* Все предыдущие стили остаются без изменений */
         body {
             margin: 0;
             padding: 0;
@@ -13,7 +13,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-image: url('2025-11-07_13-07-33-photoaidcom-darken (1).png');
+            background-image: url('images/background.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -27,7 +27,6 @@
             opacity: 1;
         }
 
-        /* Остальные стили остаются без изменений */
         body::before {
             content: '';
             position: fixed;
@@ -75,7 +74,7 @@
             width: 90%;
             max-width: 1800px;
             height: 600px;
-            background-image: url('23967e8e-3300-40bc-b1d3-4a7ad067ed8f.png');
+            background-image: url('images/title.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -361,6 +360,191 @@
         .ink-splash:first-child .section-title {
             margin-top: 0;
         }
+
+        /* МЕДИА-ЗАПРОСЫ ДЛЯ ТЕЛЕФОНОВ */
+        @media (max-width: 768px) {
+            /* Навигация для телефона */
+            .navbar {
+                height: 50px;
+                gap: 10px;
+                padding: 0 10px;
+            }
+
+            .nav-button {
+                font-size: 12px;
+                padding: 6px 10px;
+                border-radius: 4px;
+            }
+
+            /* Тайтл для телефона */
+            .title {
+                width: 95%;
+                height: 300px;
+                margin-top: 70px;
+                margin-bottom: -30px;
+            }
+
+            /* Контентный контейнер для телефона */
+            .content-container {
+                width: 95%;
+                padding: 20px 15px;
+                border-width: 1px;
+            }
+
+            /* Текст для телефона */
+            .section-title {
+                font-size: 28px;
+                margin-top: 40px;
+                margin-bottom: 25px;
+                padding-bottom: 10px;
+            }
+
+            .section-text {
+                font-size: 18px;
+                line-height: 1.5;
+                margin-bottom: 25px;
+                text-align: left;
+            }
+
+            /* Индикатор скролла для телефона */
+            .scroll-indicator {
+                width: 50px;
+                height: 50px;
+                top: -60px;
+            }
+
+            .scroll-indicator::after {
+                font-size: 20px;
+            }
+
+            /* Разделители для телефона */
+            .section-divider {
+                margin: 40px auto;
+                width: 80%;
+            }
+
+            /* Блоки с текстом для телефона */
+            .ink-splash {
+                padding: 15px;
+                margin: 20px 0;
+            }
+
+            .ink-splash::before {
+                left: -5px;
+                right: -5px;
+                border-radius: 10px;
+            }
+
+            /* Карусель для телефона */
+            .screenshots-carousel {
+                margin: 40px 0;
+                padding: 15px 0;
+            }
+
+            .carousel-container {
+                border-radius: 10px;
+                border-width: 1px;
+            }
+
+            .carousel-slide {
+                padding: 10px;
+            }
+
+            .carousel-image {
+                border-radius: 8px;
+            }
+
+            .carousel-button {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+
+            .carousel-prev {
+                left: 10px;
+            }
+
+            .carousel-next {
+                right: 10px;
+            }
+
+            .carousel-dots {
+                margin-top: 15px;
+            }
+
+            .carousel-dot {
+                width: 10px;
+                height: 10px;
+            }
+
+            /* Кнопка скачивания для телефона */
+            .download-button {
+                width: 90%;
+                padding: 20px 25px;
+                font-size: 20px;
+                margin: 30px auto;
+                border-width: 2px;
+            }
+
+            /* Верхнее затемнение для телефона */
+            .top-fade {
+                height: 200px;
+            }
+        }
+
+        /* Для очень маленьких телефонов */
+        @media (max-width: 480px) {
+            .navbar {
+                gap: 5px;
+            }
+
+            .nav-button {
+                font-size: 10px;
+                padding: 5px 8px;
+            }
+
+            .title {
+                height: 250px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .section-text {
+                font-size: 16px;
+            }
+
+            .carousel-button {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .download-button {
+                font-size: 18px;
+                padding: 18px 20px;
+            }
+        }
+
+        /* Для планшетов */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .content-container {
+                width: 90%;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .section-text {
+                font-size: 28px;
+            }
+
+            .title {
+                height: 500px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -370,7 +554,7 @@
         <a href="#description" class="nav-button">Описание</a>
         <a href="#screenshots" class="nav-button">Скриншоты</a>
         <a href="#download" class="nav-button">Скачать</a>
-        <a href="https://joeydrewstudios.com" class="nav-button" target="_blank">Joey Drew Studios official site</a>
+        <a href="https://joeydrewstudios.com" class="nav-button" target="_blank">Joey Drew Studios</a>
     </nav>
 
     <div class="title"></div>
@@ -440,7 +624,7 @@
         <!-- Кнопка скачивания -->
         <div class="ink-splash" id="download">
             <a href="#" class="download-button" onclick="event.preventDefault()">
-                СКАЧАТЬ БИЛД
+                📥 СКАЧАТЬ БИЛД
             </a>
         </div>
     </div>
@@ -463,16 +647,15 @@
             window.scrollTo(0, 0);
         }
 
-        // Остальной JavaScript код остается без изменений
+        // Данные скриншотов
         const screenshots = [
-            '2025-11-07_13-07-33-photoaidcom-darken%20(1).png',
-            '2025-11-09_03-42-35.png',
-            '2025-11-09_03-43-50.png',
-            '2025-11-09_03-44-54.png',
-            '2025-11-09_03-52-45.png',
-            '2025-11-09_04-01-27.png',
-            '2025-11-09_04-02-10.png',
-			'2025-11-09_04-04-05.png'
+            'images/screenshots/screenshot1.jpg',
+            'images/screenshots/screenshot2.jpg',
+            'images/screenshots/screenshot3.jpg',
+            'images/screenshots/screenshot4.jpg',
+            'images/screenshots/screenshot5.jpg',
+            'images/screenshots/screenshot6.jpg',
+            'images/screenshots/screenshot7.jpg'
         ];
 
         let currentSlide = 0;
@@ -554,8 +737,4 @@
         document.addEventListener('DOMContentLoaded', initCarousel);
     </script>
 </body>
-
 </html>
-
-
-
