@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Down To The Inks</title>
     <style>
-        /* Все предыдущие стили остаются без изменений */
         body {
             margin: 0;
             padding: 0;
@@ -367,7 +366,6 @@
             margin-top: 0;
         }
 
-        /* Стили для системных требований */
         .system-requirements {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -398,7 +396,6 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
-        /* Стили для модального окна с увеличенным изображением */
         .image-modal {
             position: fixed;
             top: 0;
@@ -417,9 +414,21 @@
             display: flex;
         }
 
-        .modal-image {
+        .modal-image-container {
+            position: relative;
             max-width: 90%;
             max-height: 90%;
+            cursor: grab;
+            transition: transform 0.1s ease;
+        }
+
+        .modal-image-container:active {
+            cursor: grabbing;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
             border-radius: 10px;
             box-shadow: 0 0 40px rgba(245, 245, 220, 0.3);
@@ -459,9 +468,93 @@
             opacity: 1;
         }
 
+        .about-page {
+            display: none;
+        }
+
+        .about-page.active {
+            display: block;
+        }
+
+        .logo {
+            width: 90%;
+            max-width: 800px;
+            height: 400px;
+            background-image: url('23967e8e-3300-40bc-b1d3-4a7ad067ed8f.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 100px auto 50px;
+        }
+
+        .social-section {
+            text-align: center;
+            margin: 60px 0;
+            padding: 40px 20px;
+        }
+
+        .social-title {
+            color: rgb(245, 245, 220);
+            font-size: 36px;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            border-bottom: 2px solid rgb(245, 245, 220);
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid rgb(245, 245, 220);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            color: rgb(245, 245, 220);
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .social-name {
+            color: rgb(245, 245, 220);
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover .social-icon {
+            transform: scale(1.1);
+            background: rgba(245, 245, 220, 0.2);
+            border-color: #fff;
+            box-shadow: 0 0 20px rgba(245, 245, 220, 0.4);
+        }
+
+        .social-link:hover .social-name {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(245, 245, 220, 0.5);
+        }
+
         /* МЕДИА-ЗАПРОСЫ ДЛЯ ТЕЛЕФОНОВ */
         @media (max-width: 768px) {
-            /* Навигация для телефона */
             .navbar {
                 height: 50px;
                 gap: 10px;
@@ -474,7 +567,6 @@
                 border-radius: 4px;
             }
 
-            /* Тайтл для телефона */
             .title {
                 width: 95%;
                 height: 300px;
@@ -482,14 +574,12 @@
                 margin-bottom: -30px;
             }
 
-            /* Контентный контейнер для телефона */
             .content-container {
                 width: 95%;
                 padding: 20px 15px;
                 border-width: 1px;
             }
 
-            /* Текст для телефона */
             .section-title {
                 font-size: 28px;
                 margin-top: 40px;
@@ -504,7 +594,6 @@
                 text-align: left;
             }
 
-            /* Индикатор скролла для телефона */
             .scroll-indicator {
                 width: 50px;
                 height: 50px;
@@ -515,13 +604,11 @@
                 font-size: 20px;
             }
 
-            /* Разделители для телефона */
             .section-divider {
                 margin: 40px auto;
                 width: 80%;
             }
 
-            /* Блоки с текстом для телефона */
             .ink-splash {
                 padding: 15px;
                 margin: 20px 0;
@@ -533,7 +620,6 @@
                 border-radius: 10px;
             }
 
-            /* Карусель для телефона */
             .screenshots-carousel {
                 margin: 40px 0;
                 padding: 15px 0;
@@ -575,7 +661,6 @@
                 height: 10px;
             }
 
-            /* Кнопка скачивания для телефона */
             .download-button {
                 width: 90%;
                 padding: 20px 25px;
@@ -587,7 +672,6 @@
                 align-items: center;
             }
 
-            /* Системные требования для телефона */
             .system-requirements {
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -606,8 +690,7 @@
                 font-size: 16px;
             }
 
-            /* Модальное окно для телефона */
-            .modal-image {
+            .modal-image-container {
                 max-width: 95%;
                 max-height: 80%;
             }
@@ -624,13 +707,35 @@
                 bottom: 10px;
             }
 
-            /* Верхнее затемнение для телефона */
             .top-fade {
                 height: 200px;
             }
+
+            .logo {
+                height: 250px;
+                margin: 80px auto 30px;
+            }
+
+            .social-title {
+                font-size: 28px;
+                margin-bottom: 30px;
+            }
+
+            .social-links {
+                gap: 30px;
+            }
+
+            .social-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
+
+            .social-name {
+                font-size: 16px;
+            }
         }
 
-        /* Для очень маленьких телефонов */
         @media (max-width: 480px) {
             .navbar {
                 gap: 5px;
@@ -671,9 +776,26 @@
             .requirement-value {
                 font-size: 14px;
             }
+
+            .logo {
+                height: 200px;
+            }
+
+            .social-title {
+                font-size: 24px;
+            }
+
+            .social-links {
+                gap: 20px;
+            }
+
+            .social-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 25px;
+            }
         }
 
-        /* Для планшетов */
         @media (min-width: 769px) and (max-width: 1024px) {
             .content-container {
                 width: 90%;
@@ -700,133 +822,195 @@
 <body>
     <!-- Навигационная панель -->
     <nav class="navbar">
-        <a href="#about" class="nav-button">О нас</a>
-        <a href="#description" class="nav-button">Описание</a>
-        <a href="#screenshots" class="nav-button">Скриншоты</a>
-        <a href="#download" class="nav-button">Скачать</a>
+        <a href="#about" class="nav-button" onclick="showAboutPage()">О нас</a>
+        <a href="#description" class="nav-button" onclick="showMainPage()">Описание</a>
+        <a href="#screenshots" class="nav-button" onclick="showMainPage('screenshots')">Скриншоты</a>
+        <a href="#download" class="nav-button" onclick="showMainPage('download')">Скачать</a>
         <a href="https://joeydrewstudios.com" class="nav-button" target="_blank">Joey Drew Studios</a>
     </nav>
 
-    <div class="title"></div>
-    <div class="top-fade"></div>
-    
-    <div class="content-container">
-        <!-- Индикатор скролла -->
-        <div class="scroll-indicator" onclick="scrollToFirstSection()"></div>
+    <!-- Главная страница -->
+    <div class="main-page">
+        <div class="title"></div>
+        <div class="top-fade"></div>
+        
+        <div class="content-container">
+            <!-- Индикатор скролла -->
+            <div class="scroll-indicator" onclick="scrollToFirstSection()"></div>
 
-        <!-- Здесь будет ваш контент -->
-        <div class="ink-splash" id="description">
-            <p class="section-title" style="margin-top: 0;">Что из себя представляет Bendy: Down To The Inks?</p>
-            <p class="section-text">
-                Если коротко - Bendy: Down To The Inks - наша фанатская игра по оригинальной увлекательной и атмосферной вселенной "Bendy and the ink machine", созданной <span class="highlight">Joey Drew Studios</span>, в ней вас ждут уже полюбившиеся многим по оригинальной серии головоломки, загадки, антагонисты, и разумеется та самая атмосфера!
-            </p>
-        </div>
+            <!-- Здесь будет ваш контент -->
+            <div class="ink-splash" id="description">
+                <p class="section-title" style="margin-top: 0;">Что из себя представляет Bendy: Down To The Inks?</p>
+                <p class="section-text">
+                    Если коротко - Bendy: Down To The Inks - наша фанатская игра по оригинальной увлекательной и атмосферной вселенной "Bendy and the ink machine", созданной <span class="highlight">Joey Drew Studios</span>, в ней вас ждут уже полюбившиеся многим по оригинальной серии головоломки, загадки, антагонисты, и разумеется та самая атмосфера!
+                </p>
+            </div>
 
-        <div class="section-divider"></div>
+            <div class="section-divider"></div>
 
-        <div class="ink-splash">
-            <p class="section-title">Лор игры</p>
-            <p class="section-text">
-                Главный герой - Эдвард, будучи исследователем заброшенных помещений натыкается на уже обветшалую квартиру <span class="highlight">Джоуи Дрю</span> из концовки первой части оригинальной вселенной. В попытках открыть ту самую дверь, ведущую в анимационную студию частично перезапускает основной цикл фигурировавший в 2 оригинальных частях, из за чего попадает в уже заброшенную локацию студии, где ему на пути к выходу предстоит пройти через множество разнообразных опасных и смертельных препятствий, среди которых, если не повезет, может оказаться и всеми известный <span class="highlight">Чернильный Демон</span>, однако хватит ли усилий героя чтобы выйти из цикла и покинуть зловещую студию?
-            </p>
-        </div>
+            <div class="ink-splash">
+                <p class="section-title">Лор игры</p>
+                <p class="section-text">
+                    Главный герой - Эдвард, будучи исследователем заброшенных помещений натыкается на уже обветшалую квартиру <span class="highlight">Джоуи Дрю</span> из концовки первой части оригинальной вселенной. В попытках открыть ту самую дверь, ведущую в анимационную студию частично перезапускает основной цикл фигурировавший в 2 оригинальных частях, из за чего попадает в уже заброшенную локацию студии, где ему на пути к выходу предстоит пройти через множество разнообразных опасных и смертельных препятствий, среди которых, если не повезет, может оказаться и всеми известный <span class="highlight">Чернильный Демон</span>, однако хватит ли усилий героя чтобы выйти из цикла и покинуть зловещую студию?
+                </p>
+            </div>
 
-        <div class="section-divider"></div>
+            <div class="section-divider"></div>
 
-        <div class="ink-splash">
-            <p class="section-title">Геймплей</p>
-            <p class="section-text">
-                Ищите различные предметы, Отбивайтесь от монстров разного уровня силы, Разбивайте препятствия в виде различных досок и прочей фурнитуры, Взаимодействуйте с различными механизмами для достижения своих целей, И разумеется, постарайтесь не умереть по пути...
-            </p>
-        </div>
+            <div class="ink-splash">
+                <p class="section-title">Геймплей</p>
+                <p class="section-text">
+                    Ищите различные предметы, Отбивайтесь от монстров разного уровня силы, Разбивайте препятствия в виде различных досок и прочей фурнитуры, Взаимодействуйте с различными механизмами для достижения своих целей, И разумеется, постарайтесь не умереть по пути...
+                </p>
+            </div>
 
-        <div class="section-divider"></div>
+            <div class="section-divider"></div>
 
-        <div class="ink-splash">
-            <p class="section-title">Системные требования</p>
-            <div class="system-requirements">
-                <div class="requirement-item">
-                    <div class="requirement-title">💻 Операционная система</div>
-                    <div class="requirement-value">Windows 10 / 11 (64-bit)</div>
-                </div>
-                <div class="requirement-item">
-                    <div class="requirement-title">⚡ Процессор</div>
-                    <div class="requirement-value">Intel Core i5-11600K<br>или AMD Ryzen 5 5600X</div>
-                </div>
-                <div class="requirement-item">
-                    <div class="requirement-title">🎮 Видеокарта</div>
-                    <div class="requirement-value">NVIDIA RTX 3060<br>или AMD Radeon RX 6600 XT</div>
-                </div>
-                <div class="requirement-item">
-                    <div class="requirement-title">💾 Оперативная память</div>
-                    <div class="requirement-value">16 GB RAM</div>
-                </div>
-                <div class="requirement-item">
-                    <div class="requirement-title">💿 Место на диске</div>
-                    <div class="requirement-value">15 GB свободного места</div>
-                </div>
-                <div class="requirement-item">
-                    <div class="requirement-title">🎯 Производительность</div>
-                    <div class="requirement-value">~80 FPS на высоких настройках</div>
+            <div class="ink-splash">
+                <p class="section-title">Системные требования</p>
+                <div class="system-requirements">
+                    <div class="requirement-item">
+                        <div class="requirement-title">💻 Операционная система</div>
+                        <div class="requirement-value">Windows 10 / 11 (64-bit)</div>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="requirement-title">⚡ Процессор</div>
+                        <div class="requirement-value">Intel Core i5-11600K<br>или AMD Ryzen 5 5600X</div>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="requirement-title">🎮 Видеокарта</div>
+                        <div class="requirement-value">NVIDIA RTX 3060<br>или AMD Radeon RX 6600 XT</div>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="requirement-title">💾 Оперативная память</div>
+                        <div class="requirement-value">16 GB RAM</div>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="requirement-title">💿 Место на диске</div>
+                        <div class="requirement-value">15 GB свободного места</div>
+                    </div>
+                    <div class="requirement-item">
+                        <div class="requirement-title">🎯 Производительность</div>
+                        <div class="requirement-value">~80 FPS на высоких настройках</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="section-divider"></div>
+            <div class="section-divider"></div>
 
-        <div class="ink-splash">
-            <p class="section-title">Примечание</p>
-            <p class="section-text">
-                На данный момент игра находится на раннем этапе разработки. Вы можете скачать уже имеющиеся билды, но там могут быть СПОЙЛЕРЫ! все на ваш страх и риск. *Скачать билды можно <span class="highlight">внизу страницы</span>*
-            </p>
-        </div>
+            <div class="ink-splash">
+                <p class="section-title">Примечание</p>
+                <p class="section-text">
+                    На данный момент игра находится на раннем этапе разработки. Вы можете скачать уже имеющиеся билды, но там могут быть СПОЙЛЕРЫ! все на ваш страх и риск. *Скачать билды можно <span class="highlight">внизу страницы</span>*
+                </p>
+            </div>
 
-        <div class="section-divider"></div>
+            <div class="section-divider"></div>
 
-        <!-- Секция скриншотов -->
-        <div class="ink-splash" id="screenshots">
-            <p class="section-title">Скриншоты</p>
-            
-            <div class="screenshots-carousel">
-                <div class="carousel-container">
-                    <div class="carousel-track" id="carouselTrack">
-                        <!-- Слайды будут добавлены через JavaScript -->
+            <!-- Секция скриншотов -->
+            <div class="ink-splash" id="screenshots">
+                <p class="section-title">Скриншоты</p>
+                
+                <div class="screenshots-carousel">
+                    <div class="carousel-container">
+                        <div class="carousel-track" id="carouselTrack">
+                            <!-- Слайды будут добавлены через JavaScript -->
+                        </div>
+                        
+                        <button class="carousel-button carousel-prev" onclick="prevSlide()">❮</button>
+                        <button class="carousel-button carousel-next" onclick="nextSlide()">❯</button>
                     </div>
                     
-                    <button class="carousel-button carousel-prev" onclick="prevSlide()">❮</button>
-                    <button class="carousel-button carousel-next" onclick="nextSlide()">❯</button>
+                    <div class="carousel-dots" id="carouselDots">
+                        <!-- Точки будут добавлены через JavaScript -->
+                    </div>
                 </div>
-                
-                <div class="carousel-dots" id="carouselDots">
-                    <!-- Точки будут добавлены через JavaScript -->
-                </div>
+            </div>
+
+            <!-- Кнопка скачивания -->
+            <div class="ink-splash" id="download">
+                <a href="#" class="download-button" onclick="event.preventDefault()">
+                    СКАЧАТЬ БИЛД
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Страница "О нас" -->
+    <div class="about-page" id="aboutPage">
+        <div class="logo"></div>
+        <div class="top-fade"></div>
+        
+        <div class="content-container">
+            <div class="ink-splash">
+                <p class="section-title" style="margin-top: 0;">Команда Loom Studios</p>
+                <p class="section-text">
+                    Мы - небольшая, но страстная команда энтузиастов, объединенных любовью к атмосферным хоррор-играм и вселенной Bendy. Наш проект "Down To The Inks" создается на чистом энтузиазме и желании подарить сообществу новое захватывающее приключение в знакомом мире.
+                </p>
+                <p class="section-text">
+                    Наша миссия - сохранить дух оригинальной серии, привнеся в нее свежие идеи и интересные механики. Мы стремимся создать игру, которая понравится как давним поклонникам франшизы, так и новым игрокам.
+                </p>
+                <p class="section-text">
+                    Каждый член нашей команды вносит свой уникальный вклад - от программирования и дизайна уровней до создания атмосферы и звукового сопровождения. Мы верим, что настоящая магия происходит там, где страсть встречается с упорством.
+                </p>
             </div>
         </div>
 
-        <!-- Кнопка скачивания -->
-        <div class="ink-splash" id="download">
-            <a href="#" class="download-button" onclick="event.preventDefault()">
-                СКАЧАТЬ БИЛД
-            </a>
+        <!-- Соцсети -->
+        <div class="social-section">
+            <div class="social-title">Наши соцсети</div>
+            <div class="social-links">
+                <a href="https://t.me/downtotheinks" class="social-link" target="_blank">
+                    <div class="social-icon">📱</div>
+                    <div class="social-name">Telegram</div>
+                </a>
+                <a href="https://t.me/downtotheinks" class="social-link" target="_blank">
+                    <div class="social-icon">💬</div>
+                    <div class="social-name">Discord</div>
+                </a>
+            </div>
         </div>
     </div>
 
     <!-- Модальное окно для увеличенных изображений -->
     <div class="image-modal" id="imageModal">
         <button class="modal-close" onclick="closeModal()">×</button>
-        <img class="modal-image" id="modalImage" src="" alt="Увеличенный скриншот">
+        <div class="modal-image-container" id="modalImageContainer">
+            <img class="modal-image" id="modalImage" src="" alt="Увеличенный скриншот">
+        </div>
         <div class="zoom-info" id="zoomInfo">
-            Колесико мыши для масштабирования • Клик для закрытия
+            Колесико мыши для масштабирования • Перетаскивание для навигации • Клик для закрытия
         </div>
     </div>
 
     <script>
+        // Переключение между страницами
+        function showAboutPage() {
+            document.querySelector('.main-page').style.display = 'none';
+            document.getElementById('aboutPage').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function showMainPage(section = '') {
+            document.querySelector('.main-page').style.display = 'block';
+            document.getElementById('aboutPage').classList.remove('active');
+            
+            if (section) {
+                setTimeout(() => {
+                    document.getElementById(section).scrollIntoView({ 
+                        behavior: 'smooth' 
+                    });
+                }, 100);
+            } else {
+                window.scrollTo(0, 0);
+            }
+        }
+
         // Сначала скроллим наверх, потом показываем контент
         window.scrollTo(0, 0);
         
         // Ждем полной загрузки страницы
         window.addEventListener('load', function() {
-            // Добавляем небольшую задержку для гарантии
             setTimeout(function() {
                 document.body.classList.add('loaded');
                 window.scrollTo(0, 0);
@@ -847,14 +1031,15 @@
             '2025-11-09_03-52-45.png',
             '2025-11-09_04-01-27.png',
             '2025-11-09_04-02-10.png',
-            '2025-11-09_04-04-05.png',
-			'2025-11-09_05-35-34.png'
+            '2025-11-09_04-04-05.png'
         ];
 
         let currentSlide = 0;
         let currentScale = 1;
+        let translateX = 0;
+        let translateY = 0;
         let isDragging = false;
-        let startX, startY, translateX = 0, translateY = 0;
+        let startX, startY;
 
         function initCarousel() {
             const track = document.getElementById('carouselTrack');
@@ -887,137 +1072,4 @@
         }
 
         function nextSlide() {
-            currentSlide = (currentSlide + 1) % screenshots.length;
-            updateCarousel();
-        }
-
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + screenshots.length) % screenshots.length;
-            updateCarousel();
-        }
-
-        function goToSlide(index) {
-            currentSlide = index;
-            updateCarousel();
-        }
-
-        // Функции для модального окна
-        function openModal(imageSrc) {
-            const modal = document.getElementById('imageModal');
-            const modalImage = document.getElementById('modalImage');
-            const zoomInfo = document.getElementById('zoomInfo');
-            
-            modalImage.src = imageSrc;
-            modalImage.style.transform = 'scale(1) translate(0, 0)';
-            modal.classList.add('active');
-            currentScale = 1;
-            translateX = 0;
-            translateY = 0;
-            
-            // Обновляем текст подсказки для мобильных
-            if (window.innerWidth <= 768) {
-                zoomInfo.textContent = 'Два пальца для масштабирования • Касание для закрытия';
-            } else {
-                zoomInfo.textContent = 'Колесико мыши для масштабирования • Клик для закрытия';
-            }
-            
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('imageModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Зум для модального окна
-        document.getElementById('modalImage').addEventListener('wheel', function(e) {
-            e.preventDefault();
-            const zoomIntensity = 0.1;
-            const delta = -e.deltaY * zoomIntensity;
-            
-            currentScale = Math.max(0.5, Math.min(3, currentScale + delta));
-            this.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
-        });
-
-        // Закрытие модального окна по клику на фон
-        document.getElementById('imageModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-
-        // Закрытие по Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
-
-        // Touch events для мобильного зума
-        let initialDistance = null;
-        
-        document.getElementById('modalImage').addEventListener('touchstart', function(e) {
-            if (e.touches.length === 2) {
-                e.preventDefault();
-                initialDistance = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY
-                );
-            }
-        });
-
-        document.getElementById('modalImage').addEventListener('touchmove', function(e) {
-            if (e.touches.length === 2) {
-                e.preventDefault();
-                const currentDistance = Math.hypot(
-                    e.touches[0].clientX - e.touches[1].clientX,
-                    e.touches[0].clientY - e.touches[1].clientY
-                );
-                
-                if (initialDistance !== null) {
-                    const scaleChange = (currentDistance - initialDistance) * 0.01;
-                    currentScale = Math.max(0.5, Math.min(3, currentScale + scaleChange));
-                    this.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
-                    initialDistance = currentDistance;
-                }
-            }
-        });
-
-        document.getElementById('modalImage').addEventListener('touchend', function() {
-            initialDistance = null;
-        });
-
-        function scrollToFirstSection() {
-            document.getElementById('description').scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-
-        document.querySelector('a[href="#description"]').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('description').scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-            });
-        });
-
-        document.querySelector('a[href="#screenshots"]').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('screenshots').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
-        });
-
-        document.querySelector('a[href="#download"]').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('download').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', initCarousel);
-    </script>
-</body>
-</html>
+            currentSlide = (currentSlide + 1
