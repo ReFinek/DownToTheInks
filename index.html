@@ -1031,8 +1031,7 @@
             '2025-11-09_03-52-45.png',
             '2025-11-09_04-01-27.png',
             '2025-11-09_04-02-10.png',
-            '2025-11-09_04-04-05.png',
-            '2025-11-09_05-35-34.png'
+            '2025-11-09_04-04-05.png'
         ];
 
         let currentSlide = 0;
@@ -1073,5 +1072,185 @@
         }
 
         function nextSlide() {
-            currentSlide = (currentSlide + 1
+            currentSlide = (currentSlide + 1) % screenshots.length;
+            updateCarousel();
+        }
 
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + screenshots.length) % screenshots.length;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        // Функции для модального окна с улучшенным зумом и перетаскиванием
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalContainer = document.getElementById('modalImageContainer');
+            const zoomInfo = document.getElementById('zoomInfo');
+            
+            modalImage.src = imageSrc;
+            currentScale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateModalTransform();
+            
+            modal.classList.add('active');
+            
+            // Обновляем текст подсказки для мобильных
+            if (window.innerWidth <= 768) {
+                zoomInfo.textContent = 'Два пальца для масштабирования • Перетаскивание для навигации • Касание для закрытия';
+            } else {
+                zoomInfo.textContent = 'Колесико мыши для масштабирования • Перетаскивание для навигации • Клик для закрытия';
+            }
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function updateModalTransform() {
+            const modalImage = document.getElementById('modalImage');
+            modalImage.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+        }
+
+        // Улучшенный зум с меньшей чувствительностью
+        document.getElementById('modalImageContainer').addEventListener('wheel', function(e) {
+            e.preventDefault();
+            const zoomIntensity = 0.05; // Уменьшена чувствительность
+            const delta = -e.deltaY * zoomIntensity;
+            const oldScale = currentScale;
+            
+            currentScale = Math.max(0.5, Math.min(3, currentScale + delta));
+            
+            // Корректируем позицию для сохранения точки под курсором
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const scaleChange = currentScale / oldScale;
+            translateX = (translateX + x) * scaleChange - x;
+            translateY = (translateY + y) * scaleChange - y;
+            
+            updateModalTransform();
+        });
+
+        // Перетаскивание изображения
+        document.getElementById('modalImageContainer').addEventListener('mousedown', function(e) {
+            if (currentScale > 1) {
+                e.preventDefault();
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                this.style.cursor = 'grabbing';
+            }
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (isDragging) {
+                e.preventDefault();
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                updateModalTransform();
+            }
+        });
+
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+            document.getElementById('modalImageContainer').style.cursor = 'grab';
+        });
+
+        // Touch events для мобильного зума и перетаскивания
+        let initialDistance = null;
+        let initialTouches = [];
+        
+        document.getElementById('modalImageContainer').addEventListener('touchstart', function(e) {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                initialDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                initialTouches = Array.from(e.touches);
+            } else if (e.touches.length === 1 && currentScale > 1) {
+                e.preventDefault();
+                isDragging = true;
+                startX = e.touches[0].clientX - translateX;
+                startY = e.touches[0].clientY - translateY;
+            }
+        });
+
+        document.getElementById('modalImageContainer').addEventListener('touchmove', function(e) {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                const currentDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                
+                if (initialDistance !== null) {
+                    const scaleChange = (currentDistance - initialDistance) * 0.005; // Уменьшена чувствительность
+                    const oldScale = currentScale;
+                    currentScale = Math.max(0.5, Math.min(3, currentScale + scaleChange));
+                    
+                    // Корректируем позицию для сохранения центра между пальцами
+                    const currentCenterX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+                    const currentCenterY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+                    const initialCenterX = (initialTouches[0].clientX + initialTouches[1].clientX) / 2;
+                    const initialCenterY = (initialTouches[0].clientY + initialTouches[1].clientY) / 2;
+                    
+                    const scaleRatio = currentScale / oldScale;
+                    translateX = (translateX + initialCenterX) * scaleRatio - currentCenterX;
+                    translateY = (translateY + initialCenterY) * scaleRatio - currentCenterY;
+                    
+                    updateModalTransform();
+                    initialDistance = currentDistance;
+                    initialTouches = Array.from(e.touches);
+                }
+            } else if (e.touches.length === 1 && isDragging) {
+                e.preventDefault();
+                translateX = e.touches[0].clientX - startX;
+                translateY = e.touches[0].clientY - startY;
+                updateModalTransform();
+            }
+        });
+
+        document.getElementById('modalImageContainer').addEventListener('touchend', function() {
+            initialDistance = null;
+            initialTouches = [];
+            isDragging = false;
+        });
+
+        // Закрытие модального окна по клику на фон
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Закрытие по Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        function scrollToFirstSection() {
+            document.getElementById('description').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initCarousel);
+    </script>
+</body>
+</html>
