@@ -70,6 +70,45 @@
             border-color: rgb(245, 245, 220);
         }
 
+        .language-switcher {
+            position: absolute;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .language-button {
+            background: none;
+            border: 1px solid rgba(245, 245, 220, 0.3);
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: rgb(245, 245, 220);
+            font-size: 14px;
+        }
+
+        .language-button:hover {
+            background-color: #333;
+            border-color: rgb(245, 245, 220);
+        }
+
+        .language-button.active {
+            background-color: rgba(245, 245, 220, 0.2);
+            border-color: rgb(245, 245, 220);
+        }
+
+        .flag {
+            width: 20px;
+            height: 15px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
         .title {
             width: 90%;
             max-width: 1800px;
@@ -363,6 +402,30 @@
             box-shadow: 0 4px 15px rgba(245, 245, 220, 0.4);
         }
 
+        .download-button.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .download-button.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid rgb(245, 245, 220);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         .ink-splash:first-child .section-title {
             margin-top: 0;
         }
@@ -472,6 +535,23 @@
                 font-size: 12px;
                 padding: 6px 10px;
                 border-radius: 4px;
+            }
+
+            .language-switcher {
+                position: relative;
+                right: auto;
+                margin-left: auto;
+                gap: 5px;
+            }
+
+            .language-button {
+                padding: 4px 8px;
+                font-size: 12px;
+            }
+
+            .flag {
+                width: 16px;
+                height: 12px;
             }
 
             /* Тайтл для телефона */
@@ -641,6 +721,16 @@
                 padding: 5px 8px;
             }
 
+            .language-button {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+
+            .flag {
+                width: 14px;
+                height: 10px;
+            }
+
             .title {
                 height: 250px;
             }
@@ -705,6 +795,17 @@
         <a href="#screenshots" class="nav-button">Скриншоты</a>
         <a href="#download" class="nav-button">Скачать</a>
         <a href="https://joeydrewstudios.com" class="nav-button" target="_blank">Joey Drew Studios</a>
+        
+        <div class="language-switcher">
+            <button class="language-button active" onclick="changeLanguage('ru')">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5IDYiPjxyZWN0IHdpZHRoPSI5IiBoZWlnaHQ9IjIiIGZpbGw9IiNmZmYiLz48cmVjdCB5PSIyIiB3aWR0aD0iOSIgaGVpZ2h0PSIyIiBmaWxsPSIjMDAzOGE3Ii8+PHJlY3QgeT0iNCIgd2lkdGg9IjkiIGhlaWdodD0iMiIgZmlsbD0iI2Q1MDE1MyIvPjwvc3ZnPg==" class="flag" alt="RU">
+                RU
+            </button>
+            <button class="language-button" onclick="changeLanguage('en')">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5IDYiPjxyZWN0IHdpZHRoPSI5IiBoZWlnaHQ9IjYiIGZpbGw9IiMwMDIzN2YiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMCAwdjZMMy41IDMgMCAweiIvPjxwYXRoIGZpbGw9IiNjYTAwMjUiIGQ9Ik0wIDBoNHY2SDB6Ii8+PHBhdGggZmlsbD0iI2NhMDAyNSIgZD0iTTUgMGg0djZINXoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNOSAwdjZMNi41IDMgOSAweiIvPjwvc3ZnPg==" class="flag" alt="EN">
+                EN
+            </button>
+        </div>
     </nav>
 
     <div class="title"></div>
@@ -805,7 +906,7 @@
 
         <!-- Кнопка скачивания -->
         <div class="ink-splash" id="download">
-            <a href="#" class="download-button" onclick="event.preventDefault()">
+            <a href="#" class="download-button" onclick="downloadGame(event)">
                 СКАЧАТЬ БИЛД
             </a>
         </div>
@@ -847,14 +948,115 @@
             '2025-11-09_03-52-45.png',
             '2025-11-09_04-01-27.png',
             '2025-11-09_04-02-10.png',
-            '2025-11-09_04-04-05.png',
-            '2025-11-09_05-35-34.png'
+            '2025-11-09_04-04-05.png'
         ];
 
         let currentSlide = 0;
         let currentScale = 1;
         let isDragging = false;
         let startX, startY, translateX = 0, translateY = 0;
+
+        // Функция для скачивания игры
+        function downloadGame(event) {
+            event.preventDefault();
+            
+            const downloadButton = event.target;
+            const originalText = downloadButton.textContent;
+            
+            // Добавляем индикатор загрузки
+            downloadButton.classList.add('loading');
+            downloadButton.textContent = 'ПОДГОТОВКА...';
+            
+            // Путь к вашему ZIP архиву на GitHub
+            const zipFilePath = 'game-build.zip'; // Замените на реальный путь к вашему архиву
+            
+            // Создаем временную ссылку для скачивания
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.href = zipFilePath;
+                link.download = 'Bendy_Down_To_The_Inks_Build.zip';
+                
+                // Симулируем клик по ссылке
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Возвращаем исходное состояние кнопки
+                downloadButton.classList.remove('loading');
+                downloadButton.textContent = originalText;
+                
+                // Показываем сообщение об успешном скачивании
+                showDownloadSuccess();
+            }, 2000); // Имитация задержки загрузки
+        }
+
+        // Функция для показа сообщения об успешном скачивании
+        function showDownloadSuccess() {
+            // Создаем временное сообщение
+            const successMessage = document.createElement('div');
+            successMessage.textContent = 'Скачивание началось! Проверьте папку "Загрузки".';
+            successMessage.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.9);
+                color: rgb(245, 245, 220);
+                padding: 20px 30px;
+                border: 2px solid rgb(245, 245, 220);
+                border-radius: 10px;
+                font-size: 18px;
+                z-index: 10000;
+                text-align: center;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            `;
+            
+            document.body.appendChild(successMessage);
+            
+            // Удаляем сообщение через 3 секунды
+            setTimeout(() => {
+                document.body.removeChild(successMessage);
+            }, 3000);
+        }
+
+        // Функция для переключения языка
+        function changeLanguage(lang) {
+            const buttons = document.querySelectorAll('.language-button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            
+            // Здесь можно добавить логику смены языка
+            if (lang === 'en') {
+                // Английская версия
+                document.querySelector('a[href="#about"]').textContent = 'About';
+                document.querySelector('a[href="#description"]').textContent = 'Description';
+                document.querySelector('a[href="#screenshots"]').textContent = 'Screenshots';
+                document.querySelector('a[href="#download"]').textContent = 'Download';
+                
+                // Обновляем тексты на странице
+                document.querySelector('#description .section-title').textContent = 'What is Bendy: Down To The Inks?';
+                document.querySelector('#description .section-text').innerHTML = 
+                    'In short - Bendy: Down To The Inks is our fan game based on the original captivating and atmospheric universe of "Bendy and the ink machine" created by <span class="highlight">Joey Drew Studios</span>. It features puzzles, mysteries, antagonists, and of course that iconic atmosphere that many have come to love from the original series!';
+                
+                // Можно добавить перевод остальных секций по аналогии
+                
+                document.querySelector('.download-button').textContent = 'DOWNLOAD BUILD';
+                
+            } else {
+                // Русская версия (восстанавливаем оригинальные тексты)
+                document.querySelector('a[href="#about"]').textContent = 'О нас';
+                document.querySelector('a[href="#description"]').textContent = 'Описание';
+                document.querySelector('a[href="#screenshots"]').textContent = 'Скриншоты';
+                document.querySelector('a[href="#download"]').textContent = 'Скачать';
+                
+                document.querySelector('#description .section-title').textContent = 'Что из себя представляет Bendy: Down To The Inks?';
+                document.querySelector('#description .section-text').innerHTML = 
+                    'Если коротко - Bendy: Down To The Inks - наша фанатская игра по оригинальной увлекательной и атмосферной вселенной "Bendy and the ink machine", созданной <span class="highlight">Joey Drew Studios</span>, в ней вас ждут уже полюбившиеся многим по оригинальной серии головоломки, загадки, антагонисты, и разумеется та самая атмосфера!';
+                
+                document.querySelector('.download-button').textContent = 'СКАЧАТЬ БИЛД';
+            }
+        }
 
         function initCarousel() {
             const track = document.getElementById('carouselTrack');
