@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Down To The Inks</title>
+    <link rel="icon" type="image/png" href="icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --text-color: rgb(245, 245, 220);
             --bg-dark: rgba(0, 0, 0, 0.7);
             --border-color: rgb(245, 245, 220);
-            --ink-color: #1a1a1a;
+            --ink-color: #000000;
             --blood-red: #8B0000;
             --gold: #D4AF37;
+            --section-gold: #E6C35C;
         }
         
         * {
@@ -47,29 +49,29 @@
             z-index: -1;
         }
 
-        /* Ink drip animations */
+        /* Ink drip animations - улучшенные */
         .ink-drip {
             position: fixed;
             top: -100px;
-            width: 150px;
+            width: 60px;
             height: 200px;
-            background: linear-gradient(to bottom, transparent 10%, var(--ink-color) 90%);
-            clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
-            animation: drip 15s linear infinite;
-            z-index: 2;
-            opacity: 0.3;
+            background: linear-gradient(to bottom, transparent 5%, var(--ink-color) 20%, var(--ink-color) 95%, transparent 100%);
+            clip-path: polygon(0 0, 100% 0, 85% 90%, 80% 100%, 20% 100%, 15% 90%);
+            animation: drip 20s linear infinite;
+            z-index: -1;
+            opacity: 0.4;
         }
 
-        .ink-drip:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .ink-drip:nth-child(2) { left: 30%; animation-delay: 5s; }
-        .ink-drip:nth-child(3) { left: 60%; animation-delay: 10s; }
-        .ink-drip:nth-child(4) { left: 85%; animation-delay: 7s; }
+        .ink-drip:nth-child(1) { left: 8%; animation-delay: 0s; }
+        .ink-drip:nth-child(2) { left: 25%; animation-delay: 7s; }
+        .ink-drip:nth-child(3) { left: 65%; animation-delay: 12s; }
+        .ink-drip:nth-child(4) { left: 88%; animation-delay: 5s; }
 
         @keyframes drip {
             0% { transform: translateY(-100px); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(100vh); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(120vh); opacity: 0; }
         }
 
         .navbar {
@@ -250,7 +252,7 @@
             font-size: 44px;
             margin: 80px 0 40px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 2px solid transparent;
             padding-bottom: 15px;
             font-family: 'Creepster', cursive;
             letter-spacing: 2px;
@@ -261,10 +263,10 @@
             content: '';
             position: absolute;
             bottom: -2px;
-            left: 25%;
-            width: 50%;
+            left: 20%;
+            width: 60%;
             height: 3px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            background: linear-gradient(90deg, transparent, var(--section-gold), rgba(230, 195, 92, 0.3), transparent);
         }
 
         .section-text {
@@ -286,7 +288,7 @@
 
         .section-divider {
             height: 4px;
-            background: linear-gradient(90deg, transparent 0%, var(--border-color) 50%, transparent 100%);
+            background: linear-gradient(90deg, transparent 0%, var(--section-gold) 50%, transparent 100%);
             margin: 60px auto;
             width: 60%;
             position: relative;
@@ -298,10 +300,11 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: var(--gold);
-            background: var(--bg-dark);
-            padding: 0 15px;
-            font-size: 20px;
+            color: var(--section-gold);
+            font-size: 24px;
+            text-shadow: 0 0 8px rgba(230, 195, 92, 0.6);
+            background: transparent;
+            padding: 0;
         }
 
         .ink-splash {
@@ -369,12 +372,10 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             cursor: pointer;
             transition: transform 0.3s ease;
-            filter: sepia(0.3) brightness(0.9);
         }
 
         .carousel-image:hover { 
             transform: scale(1.02);
-            filter: sepia(0) brightness(1);
             box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
         }
 
@@ -704,7 +705,7 @@
             .zoom-info { font-size: 14px; padding: 8px 16px; bottom: 10px; }
             .top-fade { height: 200px; }
             .bendy-corner { width: 80px; height: 80px; }
-            .ink-drip { width: 80px; height: 120px; }
+            .ink-drip { width: 40px; height: 150px; }
         }
 
         @media (max-width: 480px) {
@@ -728,7 +729,7 @@
     </style>
 </head>
 <body>
-    <!-- Ink drip animations -->
+    <!-- Ink drip animations - улучшенные -->
     <div class="ink-drip"></div>
     <div class="ink-drip"></div>
     <div class="ink-drip"></div>
@@ -752,7 +753,7 @@
         
         <div class="language-switcher">
             <button class="language-button active" onclick="changeLanguage('ru')">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5IDYiPjxyZWN0IHdpZHRoPSI5IiBoZWlnaHQ9IjIiIGZpbGw9IiNmZmYiLz48cmVjdCB5PSIyIiB3aWR0aD0iOSIgaGVpZ2h0PSIyIiBmaWxsPSIjMDAzOGE3Ii8+PHJlY3QgeT0iNCIgd2lkdGg9IjkiIGhlaWdodD0iMiIgZmlsbD0iI2Q1MDE1MyIvPjwvc3ZnPg==" class="flag" alt="RU">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5IDYiPjxyZWN0IHdpZHRoPSI5IiBoZWlnaHQ9IjIiIGZpbGw9IiNmZmYiLz48cmVjdCB5PSIyIiB3aWR0aD0iOSIgaGVpZ2h0PSIyIiBmaWxsPSIjMDAzOGE3Ii8+PHJlY3QgeT0iNCIgd2lkdGg9IjkiIGhlaWdodD0iIiBmaWxsPSIjZDUwMTUzIi8+PC9zdmc+" class="flag" alt="RU">
                 RU
             </button>
             <button class="language-button" onclick="changeLanguage('en')">
